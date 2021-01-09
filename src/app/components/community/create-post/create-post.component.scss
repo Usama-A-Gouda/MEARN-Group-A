@@ -1,0 +1,11 @@
+#blog{
+    background-color:rgba($color: #ADAEB0, $alpha: .14);
+    justify-content: space-around !important;
+    display: flex !important;
+    flex-direction: column;
+}
+
+.post-btn{
+    background-color: #F98169;
+    width: 100%;
+}
