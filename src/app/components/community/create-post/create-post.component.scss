@@ -1,11 +1,22 @@
-#blog{
-    background-color:rgba($color: #ADAEB0, $alpha: .14);
+#blog {
+    background-color: rgba($color: #adaeb0, $alpha: 0.14);
     justify-content: space-around !important;
     display: flex !important;
     flex-direction: column;
 }
 
-.post-btn{
-    background-color: #F98169;
+.post-btn {
+    background-color: #f98169;
     width: 100%;
+    background-color: #f98169;
+    border: #f98169;
+    box-shadow: 5px 10px 18px #f98169;
+    text-align: center;
+    color: white;
+    margin-right: 70px;
+    margin-top: 3%;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    transition: all 0.4s;
+    height: 40px;
 }
