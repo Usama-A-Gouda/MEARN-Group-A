@@ -1,0 +1,94 @@
+$backgroud-color-main : #ffffff;
+$primary-color-font : #ffffff;
+$black-font-color : #000000;
+$secondary-color : #F98169 ;
+$grey: rgb(231, 231, 231);
+$secondary-color-font : rgb(230, 230, 230);
+$btn-height : 50px;
+$btn-width : 200px;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+body{
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url('../images/new.png');
+}
+
+.main-class{
+display: flex;
+position: relative;
+
+}
+
+
+.images{
+    width: 30%;
+}
+
+img{
+    margin:20px 0 0 20px ;
+    width: 80%;
+    height: 40%;
+    border-radius: 10px;
+}
+
+.textRecipe{
+ margin: 40px 30px;
+
+ h3{
+     margin-bottom: 20px;
+ }
+ span{
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    i{
+        padding-right: 10px;
+    }
+ }
+}
+
+.ingredients{
+    background-color: $secondary-color-font;
+    position: absolute;
+    left: 0;
+    top: 20%;
+    margin: 0;
+    z-index: -1;
+    width: 95%;
+    height: 70vh;
+}
+.preperation{
+    p{
+        padding: 15px 0;
+    }
+}
+
+.mayalso{
+    padding-top: 30px;
+}
+#owl-demo .item{
+    margin: 3px;
+    border-radius: 10px;
+    .text-more{
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    p{
+        margin:10% 0 0 10%;
+        font-size: 14px;
+        color: $primary-color-font;
+    }
+    span{
+        margin:10% 0 0 10%;
+        font-size: 12px;
+        color: $grey;
+    }
+  }
+  #owl-demo .item img{
+    margin: 0  0 ;
+    display: block;
+    width: 100%;
+    height: auto;
+  }

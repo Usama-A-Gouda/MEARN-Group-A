@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style/style1.css">
+  <link rel="stylesheet" href="style/bootstrap.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+    crossorigin="anonymous" />
+  <title>Returned recipes</title>
+
+</head>
+
+<body>
+  <section class="filter-section">
+    <form>
+      <div class="input-icons">
+        <input class="input-field" type="text" placeholder="Search">
+        <i class="fa fa-search icon">
+        </i>
+    </form>
+    <button class="btn"><i class="fa fa-filter"></i> Filter</button>
+
+  </section>
+  <div class="flex-container">
+    <div class="filter" style="flex-grow: 1">
+      <div class="wrap-1">
+        <input type="radio" id="tab-1" name="tabs">
+        <label for="tab-1" class="cusine">
+          <div>Cusine</div>
+          <div class="cross"></div>
+        </label>
+        <div class="content">
+          <div class="container-cusines">
+            <ul class="ks-cboxtags">
+              <li><input type="checkbox" id="checkboxOne" value="African"><label for="checkboxOne">African</label></li>
+              <li><input type="checkbox" id="checkboxTwo" value="American" checked><label
+                  for="checkboxTwo">American</label></li>
+              <li><input type="checkbox" id="checkboxThree" value="British" checked><label
+                  for="checkboxThree">British</label>
+              </li>
+              <li><input type="checkbox" id="checkboxFour" value="Cajun"><label for="checkboxFour">Cajun</label></li>
+              <li><input type="checkbox" id="checkboxFive" value="Caribbean"><label for="checkboxFive">Caribbean</label>
+              </li>
+              <li><input type="checkbox" id="checkboxSix" value="Chinese" checked><label
+                  for="checkboxSix">Chinese</label></li>
+              <li><input type="checkbox" id="checkboxSeven" value="Eastern"><label for="checkboxSeven">Eastern</label>
+              </li>
+              <li><input type="checkbox" id="checkboxEight" value="European"><label for="checkboxEight">European</label>
+              </li>
+              <li><input type="checkbox" id="checkboxNine" value="Eastern European"><label for="checkboxNine">Eastern
+                  European</label></li>
+              <li><input type="checkbox" id="checkboxTen" value="French"><label for="checkboxTen">French</label></li>
+              <li class="ks-selected"><input type="checkbox" id="checkboxEleven" value="German"><label
+                  for="checkboxEleven">German</label></li>
+              <li><input type="checkbox" id="checkboxTwelve" value="Greek"><label for="checkboxTwelve">Greek</label>
+              </li>
+              <li><input type="checkbox" id="checkboxThirteen" value="Indian"><label
+                  for="checkboxThirteen">Indian</label></li>
+              <li><input type="checkbox" id="checkboxFourteen" value="Irish"><label for="checkboxFourteen">Irish</label>
+              </li>
+              <li><input type="checkbox" id="checkboxFifteen" value="Italian"><label
+                  for="checkboxFifteen">Italian</label></li>
+              <li><input type="checkbox" id="checkboxSixteen" value="Japanese"><label
+                  for="checkboxSixteen">Japanese</label></li>
+              <li><input type="checkbox" id="checkboxSeventeen" value="Korean"><label
+                  for="checkboxSeventeen">Korean</label>
+              </li>
+              <li><input type="checkbox" id="checkboxEighteen" value="Latin American"><label
+                  for="checkboxEighteen">Latin
+                  American</label></li>
+              <li><input type="checkbox" id="checkboxNinteen" value="Mediterranean"><label
+                  for="checkboxNinteen">Mediterranean</label></li>
+              <li><input type="checkbox" id="checkboxTwenty" value="Mexican"><label for="checkboxTwenty">Mexican</label>
+              </li>
+              <li><input type="checkbox" id="checkboxTwentyOne" value="Middle Eastern"><label
+                  for="checkboxTwentyOne">Middle
+                  Eastern</label></li>
+              <li><input type="checkbox" id="checkboxTwentyTwo" value="Nordic"><label
+                  for="checkboxTwentyTwo">Nordic</label>
+              </li>
+              <li><input type="checkbox" id="checkboxTwentyThree" value="Southern"><label
+                  for="checkboxTwentyThree">Southern</label></li>
+              <li><input type="checkbox" id="checkboxTwentyFour" value="Spanish"><label
+                  for="checkboxTwentyFour">Spanish</label></li>
+              <li><input type="checkbox" id="checkboxTwentyFive" value="Thai"><label
+                  for="checkboxTwentyFive">Thai</label>
+              </li>
+              <li><input type="checkbox" id="checkboxTwentySix" value="Vietnamese"><label
+                  for="checkboxTwentySix">Vietnamese</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="wrap-3">
+        <input type="radio" id="tab-3" name="tabs">
+        <label for="tab-3" class="cusine">
+          <div>Intorelances</div>
+          <div class="cross"></div>
+        </label>
+        <div class="content">
+        </div>
+      </div>
+      <div class="wrap-4">
+        <input type="radio" id="tab-4" name="tabs">
+        <label for="tab-4" class="cusine">
+          <div>Type</div>
+          <div class="cross"></div>
+        </label>
+        <div class="content">
+        </div>
+      </div>
+      <div class="wrap-5">
+        <input type="radio" id="tab-5" name="tabs">
+        <label for="tab-5" class="cusine">
+          <div>Diet</div>
+          <div class="cross"></div>
+        </label>
+        <div class="content">
+        </div>
+      </div>
+      <div class="wrap-2">
+        <input type="radio" id="tab-2" name="tabs">
+        <label for="tab-2" class="cusine">
+          <div>Nutrients</div>
+          <div class="cross"></div>
+        </label>
+        <div class="content">
+          <div class="container-cusines">
+            <div id="form-wrapper">
+              <form>
+                <h6 id="form-title">Carbohydrates</h6>
+                <div id="debt-amount-slider">
+                  <input type="radio" name="debt-amount" id="1" value="1" required>
+                  <label for="1" data-debt-amount=" < 20"></label>
+                  <input type="radio" name="debt-amount" id="2" value="2" required>
+                  <label for="2" data-debt-amount="20-35"></label>
+                  <input type="radio" name="debt-amount" id="3" value="3" required>
+                  <label for="3" data-debt-amount="35-50"></label>
+                  <input type="radio" name="debt-amount" id="4" value="4" required>
+                  <label for="4" data-debt-amount="50-75"></label>
+                  <input type="radio" name="debt-amount" id="5" value="5" required>
+                  <label for="5" data-debt-amount=" > 75"></label>
+                  <div id="debt-amount-pos"></div>
+                </div>
+              </form>
+              <form>
+                <br><br>
+                <h5 id="form-title">Protein</h5>
+                <div id="debt-amount-slider">
+                  <input type="radio" name="debt-amount" id="1" value="1" required>
+                  <label for="1" data-debt-amount=" < 20"></label>
+                  <input type="radio" name="debt-amount" id="2" value="2" required>
+                  <label for="2" data-debt-amount="20-35"></label>
+                  <input type="radio" name="debt-amount" id="3" value="3" required>
+                  <label for="3" data-debt-amount="35-50"></label>
+                  <input type="radio" name="debt-amount" id="4" value="4" required>
+                  <label for="4" data-debt-amount="50-75"></label>
+                  <input type="radio" name="debt-amount" id="5" value="5" required>
+                  <label for="5" data-debt-amount=" > 75"></label>
+                  <div id="debt-amount-pos"></div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="wrap-6">
+          <input type="radio" id="tab-6" name="tabs">
+          <label for="tab-6" class="cusine">
+            <div>More</div>
+            <div class="cross"></div>
+          </label>
+          <div class="content">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="parts" style="flex-grow: 9">
+      <div id="cards-blog" class="cards-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="cards-blog animate-box">
+                <a href="#" class="blog-bg" style="background-image: url(images/recipe.png);"></a>
+                <div class="blog-text">
+                  <h6 class="posted_on">Recipe - dessert</h6>
+                  <h4><a href="#">Crinkle Top Brownies </a></h4>
+                  <ul class="stuff">
+                    <li><i class="fa fa-stopwatch"></i>40 mins</li>
+                    <li>
+                      <span>More Info</span><i class="fa fa-arrow-right"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="cards-blog animate-box">
+                <a href="#" class="blog-bg" style="background-image: url(images/recipe.png);"></a>
+                <div class="blog-text">
+                  <h6 class="posted_on">Recipe - dessert</h6>
+                  <h4><a href="#">Crinkle Top Brownies </a></h4>
+                  <ul class="stuff">
+                    <li><i class="fa fa-stopwatch"></i>40 mins</li>
+                    <li>
+                      <span>More Info</span><i class="fa fa-arrow-right"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="cards-blog animate-box">
+                <a href="#" class="blog-bg" style="background-image: url(images/recipe.png);"></a>
+                <div class="blog-text">
+                  <h6 class="posted_on">Recipe - dessert</h6>
+                  <h4><a href="#">Crinkle Top Brownies </a></h4>
+                  <ul class="stuff">
+                    <li><i class="fa fa-stopwatch"></i>40 mins</li>
+                    <li>
+                      <span>More Info</span><i class="fa fa-arrow-right"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="cards-blog animate-box">
+                <a href="#" class="blog-bg" style="background-image: url(images/recipe.png);"></a>
+                <div class="blog-text">
+                  <h6 class="posted_on">Recipe - dessert</h6>
+                  <h4><a href="#">Crinkle Top Brownies </a></h4>
+                  <ul class="stuff">
+                    <li><i class="fa fa-stopwatch"></i>40 mins</li>
+                    <li>
+                      <span>More Info</span><i class="fa fa-arrow-right"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="cards-blog animate-box">
+                <a href="#" class="blog-bg" style="background-image: url(images/recipe.png);"></a>
+                <div class="blog-text">
+                  <h6 class="posted_on">Recipe - dessert</h6>
+                  <h4><a href="#">Crinkle Top Brownies </a></h4>
+                  <ul class="stuff">
+                    <li><i class="fa fa-stopwatch"></i>40 mins</li>
+                    <li>
+                      <span>More Info</span><i class="fa fa-arrow-right"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="cards-blog animate-box">
+                <a href="#" class="blog-bg" style="background-image: url(images/recipe.png);"></a>
+                <div class="blog-text">
+                  <h6 class="posted_on">Recipe - dessert</h6>
+                  <h4><a href="#">Crinkle Top Brownies </a></h4>
+                  <ul class="stuff">
+                    <li><i class="fa fa-stopwatch"></i>40 mins</li>
+                    <li>
+                      <span>More Info</span><i class="fa fa-arrow-right"></i>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

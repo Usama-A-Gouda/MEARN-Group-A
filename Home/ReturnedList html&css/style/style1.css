@@ -1,0 +1,509 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url("../images/new.png");
+}
+
+.filter-section {
+  width: 30%;
+  border-right: 3px solid black;
+}
+
+.filter-section .input-icons {
+  width: 90%;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.filter-section .input-icons i {
+  position: absolute;
+}
+
+.filter-section .icon {
+  padding: 10px;
+  color: #a19393;
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: left;
+}
+
+.filter-section .input-field {
+  width: 90%;
+  display: block;
+  margin: 10px auto !important;
+  padding: 10px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(209, 209, 209, 0.4);
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.4s;
+}
+.filter-section .input-field:focus {
+  border-color: #F98169;
+}
+
+.filter-section .btn {
+  background-color: #F98169;
+  border: #F98169;
+  border: 2px solid #F98169;
+  text-align: center;
+  color: #ffffff;
+  height: 40px;
+  width: 50%;
+  margin: 0 auto;
+  border-radius: 3px;
+  display: block;
+  position: relative;
+  transition: all 0.4s;
+  outline: none;
+}
+.filter-section .btn i {
+  position: absolute;
+  display: inline-block;
+  left: 50%;
+  top: 50%;
+  padding-right: 70px;
+  transform: translate(-50%, -50%);
+}
+
+.filter-section nav {
+  display: inline-block;
+}
+
+.flex-container {
+  background-color: #ffffff;
+  display: flex;
+  width: 100%;
+}
+
+.flex-container {
+  /*----------tool-tip------------*/
+}
+.flex-container .filter {
+  color: #ffffff;
+  width: 30%;
+  margin: 10px;
+}
+.flex-container input {
+  display: none;
+}
+.flex-container .cusine {
+  display: flex;
+  cursor: pointer;
+  border-bottom: 1px solid #3E474F;
+  user-select: none;
+  color: #000000;
+}
+.flex-container label div:first-child {
+  width: 100%;
+  line-height: 45px;
+  margin-left: 10px;
+  font-size: 0.8em;
+}
+.flex-container .cross {
+  margin-right: 15px;
+  margin-top: 3px;
+}
+.flex-container .cross:before, .flex-container .cross:after {
+  content: "";
+  border-top: 2px solid #3E474F;
+  width: 15px;
+  display: block;
+  margin-top: 18px;
+  transition: 0.3s;
+}
+.flex-container .cross:after {
+  transform: rotate(90deg);
+  margin-top: -2px;
+}
+.flex-container .content {
+  box-sizing: border-box;
+  font-size: 0.9em;
+  margin: 10px 10px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height, 0.5s;
+}
+.flex-container input:checked ~ .content {
+  max-height: 100%;
+  transition: max-height, 1s;
+}
+.flex-container input:checked ~ label .cross:before {
+  transform: rotate(180deg);
+}
+.flex-container input:checked ~ label .cross:after {
+  transform: rotate(0deg);
+}
+.flex-container .tip {
+  color: #f03768;
+  cursor: help;
+  position: relative;
+  overflow: visible;
+  font-family: monospace;
+  font-size: 1.3em;
+}
+.flex-container .tip:before,
+.flex-container .tip:after {
+  position: absolute;
+  opacity: 0;
+  z-index: -100;
+  transform: translateY(-30%);
+  transition: 0.4s;
+}
+.flex-container .tip:before {
+  content: "";
+  border-style: solid;
+  border-width: 0.8em 0.5em 0 0.5em;
+  border-color: #3E474F transparent transparent transparent;
+  transform: translateY(-200%);
+  bottom: 90%;
+  left: 50%;
+}
+.flex-container .tip:after {
+  content: attr(data-tip);
+  background: #3E474F;
+  color: white;
+  width: 150px;
+  padding: 10px;
+  font-size: 0.8em;
+  bottom: 150%;
+  left: -50%;
+}
+.flex-container .tip:hover:before,
+.flex-container .tip:hover:after {
+  opacity: 1;
+  z-index: 100;
+  transform: scaleY(1);
+}
+
+.container-cusines {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 10px;
+  display: flex;
+}
+
+.container-cusines ul.ks-cboxtags {
+  list-style: none;
+  padding: 10px;
+}
+.container-cusines ul.ks-cboxtags li {
+  display: inline;
+}
+.container-cusines ul.ks-cboxtags li label {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(139, 139, 139, 0.3);
+  color: #adadad;
+  border-radius: 20px;
+  white-space: nowrap;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.2s;
+  padding: 2px 5px;
+  margin: 2px;
+  cursor: pointer;
+}
+.container-cusines ul.ks-cboxtags li label::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 8px;
+  padding: 2px 6px 0px 2px;
+  content: "";
+  transition: transform 0.3s ease-in-out;
+}
+.container-cusines ul.ks-cboxtags li input[type=checkbox]:checked + label::before {
+  content: "";
+  transform: rotate(-360deg);
+  transition: transform 0.3s ease-in-out;
+}
+.container-cusines ul.ks-cboxtags li input[type=checkbox]:checked + label {
+  border: 2px solid #F98169;
+  background-color: #F98169;
+  color: #fff;
+  transition: all 0.2s;
+}
+.container-cusines ul.ks-cboxtags li input[type=checkbox] {
+  display: absolute;
+}
+.container-cusines ul.ks-cboxtags li input[type=checkbox] {
+  position: absolute;
+  opacity: 0;
+}
+.container-cusines ul.ks-cboxtags li input[type=checkbox]:focus + label {
+  border: 2px solid #e9a1ff;
+}
+
+#ranges {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Nunito", sans-serif;
+  color: #000;
+  user-select: none;
+}
+
+#form-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #000000;
+  justify-content: center;
+}
+#form-wrapper form {
+  width: 80%;
+  max-width: 250px;
+  color: #000000;
+  padding-bottom: 20px;
+}
+#form-wrapper form #form-title {
+  margin-top: 0;
+  font-weight: 400;
+  text-align: center;
+}
+#form-wrapper form #debt-amount-slider {
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  position: relative;
+  width: 100%;
+  height: 50px;
+  user-select: none;
+}
+#form-wrapper form #debt-amount-slider::before {
+  content: " ";
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  width: calc(100% * (4 / 5));
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #F98169;
+}
+#form-wrapper form #debt-amount-slider input, #form-wrapper form #debt-amount-slider label {
+  box-sizing: border-box;
+  flex: 1;
+  user-select: none;
+  cursor: pointer;
+}
+#form-wrapper form #debt-amount-slider label {
+  display: inline-block;
+  position: relative;
+  width: 20%;
+  height: 90%;
+  user-select: none;
+  color: #000000;
+}
+#form-wrapper form #debt-amount-slider label::before {
+  content: attr(data-debt-amount);
+  position: absolute;
+  left: 50%;
+  padding-top: 10px;
+  transform: translate(-50%, 45px);
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0.85;
+  transition: all 0.15s ease-in-out;
+}
+#form-wrapper form #debt-amount-slider label::after {
+  content: " ";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px;
+  height: 15px;
+  border: 2px solid #F98169;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+#form-wrapper form #debt-amount-slider label:hover::after {
+  transform: translate(-50%, -50%) scale(1.25);
+}
+#form-wrapper form #debt-amount-slider input {
+  display: none;
+}
+#form-wrapper form #debt-amount-slider input:checked + label::before {
+  font-weight: 800;
+  opacity: 1;
+}
+#form-wrapper form #debt-amount-slider input:checked + label::after {
+  border-width: 4px;
+  transform: translate(-50%, -50%) scale(0.75);
+}
+#form-wrapper form #debt-amount-slider input:checked ~ #debt-amount-pos {
+  opacity: 1;
+}
+#form-wrapper form #debt-amount-slider input:checked:nth-child(1) ~ #debt-amount-pos {
+  left: 10%;
+}
+#form-wrapper form #debt-amount-slider input:checked:nth-child(3) ~ #debt-amount-pos {
+  left: 30%;
+}
+#form-wrapper form #debt-amount-slider input:checked:nth-child(5) ~ #debt-amount-pos {
+  left: 50%;
+}
+#form-wrapper form #debt-amount-slider input:checked:nth-child(7) ~ #debt-amount-pos {
+  left: 70%;
+}
+#form-wrapper form #debt-amount-slider input:checked:nth-child(9) ~ #debt-amount-pos {
+  left: 90%;
+}
+#form-wrapper form #debt-amount-slider #debt-amount-pos {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: all 0.15s ease-in-out;
+  transform: translate(-50%, -50%);
+  border: 2px solid #F98169;
+  opacity: 0;
+  z-index: 2;
+}
+#form-wrapper form:valid #debt-amount-slider input + label::before {
+  transform: translate(-50%, 45px) scale(0.9);
+  transition: all 0.15s linear;
+}
+#form-wrapper form:valid #debt-amount-slider input:checked + label::before {
+  transform: translate(-50%, 45px) scale(1.1);
+  transition: all 0.15s linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+    width: 24px;
+    opacity: 1;
+    margin-right: 12px;
+  }
+  to {
+    transform: rotate(360deg);
+    width: 24px;
+    opacity: 1;
+    margin-right: 12px;
+  }
+}
+.parts {
+  color: #ffffff;
+  width: 70%;
+  padding-left: 30px;
+}
+
+.cards-blog .blog-bg {
+  display: block;
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative;
+  height: 300px;
+}
+
+@media screen and (max-width: 768px) {
+  .cards-blog .blog-bg {
+    height: 400px;
+  }
+}
+.cards-blog .blog-text {
+  margin-bottom: 30px;
+  position: relative;
+  width: 100%;
+  padding: 30px;
+  float: left;
+  background: rgba(0, 0, 0, 0.8) url(../images/broken_noise.png) repeat;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.06);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.06);
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.cards-blog .blog-text .stuff {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #000000;
+  padding-top: 20px;
+}
+
+.cards-blog .blog-text .stuff li {
+  list-style: none;
+  display: inline-block;
+  margin-left: 10px;
+  color: #ffffff;
+}
+
+.cards-blog .blog-text .stuff li:first-child {
+  margin-left: 0;
+}
+
+.cards-blog .blog-text .stuff li:last-child {
+  float: right;
+}
+
+.cards-blog .blog-text .stuff li:last-child i {
+  padding-right: 0;
+  padding-left: 10px;
+}
+
+.cards-blog .blog-text .stuff li i {
+  margin-top: 3px;
+  margin-right: 5px;
+  color: #F98169;
+  float: left;
+  font-size: 10px;
+  padding-right: 5px;
+}
+
+.cards-blog .blog-text .stuff li span {
+  margin-top: 3px;
+  margin-right: 5px;
+  color: #F98169;
+  float: left;
+  font-size: 12px;
+  padding-right: 5px;
+}
+
+.cards-blog .blog-text h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.cards-blog .blog-text h4 a {
+  color: #ffffff;
+}
+
+/*# sourceMappingURL=style1.css.map */

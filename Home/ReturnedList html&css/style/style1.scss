@@ -1,0 +1,570 @@
+$backgroud-color-main : #ffffff;
+$primary-color-font : #ffffff;
+$black-font-color : #000000;
+$secondary-color : #F98169 ;
+$grey: rgba(220,231,235,1);
+$secondary-color-font : rgb(161, 147, 147);
+$btn-height : 50px;
+$btn-width : 200px;
+$number-of-options: 5;
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+body {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), url('../images/new.png');
+}
+
+//<<<<< Filter section >>>>>>
+
+.filter-section{
+  width:30%;
+ 
+  
+  border-right: 3px solid black;
+  // width:30%; 
+  // margin: 50px 30px;
+
+}
+     //<<<<<Search bar>>>>>>
+     .filter-section{
+     .input-icons { 
+       width: 90%; 
+      margin-bottom: 10px; 
+      position: relative;
+  } 
+}
+.filter-section{   
+    .input-icons{ 
+      i {
+      position: absolute; 
+  }
+  } 
+}
+.filter-section{
+  .icon { 
+      padding: 10px; 
+      color: $secondary-color-font; 
+      position: absolute;
+      right: 0;
+      top:0;
+      // left: 20%;
+      // top: 0;
+      // min-width: 50px; 
+      text-align: left; 
+  }      
+}
+.filter-section{   
+
+  .input-field { 
+      width: 90%; 
+    display: block;
+   
+      // padding: 10px 30px;
+      margin: 10px auto !important;
+      padding: 10px;
+      position: relative;
+      left:50%;
+
+      transform: translateX(-50%);
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(209, 209, 209, 0.4);
+      border-radius: 10px;
+      outline: none;
+      transition: all 0.4s;
+     
+      &:focus{
+        border-color: $secondary-color;
+      
+        }
+  } 
+}
+
+.filter-section{   
+.btn {
+  background-color: $secondary-color;
+  border: $secondary-color;
+  border: 2px solid $secondary-color;
+  text-align: center;
+  color: $primary-color-font;
+  height: 40px;
+  width:50%;
+  margin: 0 auto;
+  border-radius: 3px;
+  display: block;
+  position: relative;
+
+  transition: all .4s;
+  outline: none;
+  i {
+    position: absolute;
+    display:inline-block;
+    left: 50%;
+    top:50%;
+    padding-right:70px;
+    transform: translate(-50%,-50%);
+  }
+}
+}
+   
+@mixin transform($value){
+  -webkit-transform: ($value);
+     -moz-transform: ($value);
+      -ms-transform: ($value);
+          transform: ($value);
+}
+@mixin transition($value){
+  -webkit-transition: ($value);
+     -moz-transition: ($value);
+      -ms-transition: ($value);
+          transition: ($value);
+}
+
+.filter-section{  
+nav{
+  display: inline-block;
+}
+}
+
+.flex-container {
+    background-color: $backgroud-color-main;
+    display: flex;
+    width: 100%;
+  }
+  
+  .flex-container {
+    .filter{
+    color: $primary-color-font;
+    width: 30%;
+    margin: 10px;
+    }
+    
+input {
+  display: none;
+}
+
+.cusine {
+  display: flex;
+  cursor: pointer;
+  border-bottom: 1px solid #3E474F;
+  user-select: none;
+  color: $black-font-color;
+}
+
+label div:first-child {
+  width: 100%;
+  line-height: 45px;
+  margin-left: 10px;
+  font-size: 0.8em;
+}
+
+.cross{
+  margin-right:15px;
+  margin-top:3px;
+}
+
+.cross:before,.cross:after {
+  content: '';
+  border-top: 2px solid #3E474F;
+  width: 15px;
+  display: block;
+  margin-top: 18px;
+  transition: 0.3s;
+}
+
+.cross:after {
+  transform: rotate(90deg);
+  margin-top: -2px;
+}
+
+.content {
+  box-sizing: border-box;
+  font-size: 0.9em;
+  margin: 10px 10px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height, .5s;
+}
+
+input:checked ~ .content {
+  max-height: 100%;
+  transition: max-height, 1s;
+}
+
+input:checked ~ label .cross:before {
+  transform: rotate(180deg);
+}
+
+input:checked ~ label .cross:after {
+  transform: rotate(0deg);
+}
+
+
+/*----------tool-tip------------*/
+
+.tip {
+  color: #f03768;
+  cursor: help;
+  position: relative;
+  overflow: visible;
+  font-family: monospace;
+  font-size: 1.3em;
+}
+
+.tip:before,
+.tip:after {
+  position: absolute;
+  opacity: 0;
+  z-index: -100;    
+  transform: translateY(-30%);
+  transition: .4s;
+}
+
+.tip:before {
+  content: '';
+  border-style: solid;
+  border-width: 0.8em 0.5em 0 0.5em;
+  border-color: #3E474F transparent transparent transparent;
+  transform: translateY(-200%);
+  bottom:90%;
+  left:50%;
+}
+
+.tip:after {
+  content: attr(data-tip);
+  background: #3E474F;
+  color: white;
+  width: 150px;
+  padding: 10px;
+  font-size: 0.8em;
+  bottom: 150%;
+  left: -50%;
+}
+
+.tip:hover:before,
+.tip:hover:after {
+  opacity: 1;
+  z-index: 100;
+  transform: scaleY(1);
+}
+
+  }
+  //<<<<<< Checkbox >>>>>
+
+.container-cusines {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 10px;
+    display: flex;
+}
+.container-cusines{
+ul.ks-cboxtags {
+  list-style: none;
+  padding: 10px;
+}
+ul.ks-cboxtags li{
+display: inline;
+}
+ul.ks-cboxtags li label{
+  display: inline-block;
+  background-color: rgba(255, 255, 255, .9);
+  border: 2px solid rgba(139, 139, 139, .3);
+  color: #adadad;
+  border-radius: 20px;
+  white-space: nowrap;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all .2s;
+  padding : 2px 5px;
+  margin : 2px;
+  cursor: pointer;
+}
+
+ul.ks-cboxtags li label::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 8px;
+  padding: 2px 6px 0px 2px;
+  content: "\f067";
+  transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
+  content: "\f00c";
+  transform: rotate(-360deg);
+  transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+  border: 2px solid $secondary-color;
+  background-color: $secondary-color;
+  color: #fff;
+  transition: all .2s;
+}
+
+ul.ks-cboxtags li input[type="checkbox"] {
+display: absolute;
+}
+ul.ks-cboxtags li input[type="checkbox"] {
+position: absolute;
+opacity: 0;
+}
+ul.ks-cboxtags li input[type="checkbox"]:focus + label {
+border: 2px solid #e9a1ff;
+}
+}
+
+
+#ranges{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito', sans-serif;
+  color: #000;
+  user-select: none;
+}
+#form-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $black-font-color;
+  justify-content: center;
+form {
+  width: 80%;
+  max-width: 250px;
+  color: $black-font-color;
+  padding-bottom: 20px;
+  #form-title {
+    margin-top: 0;
+    font-weight: 400;
+    text-align: center;
+  }
+  #debt-amount-slider {
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+    position: relative;
+    width: 100%;
+    height: 50px;
+    user-select: none;
+    &::before {
+      content: " ";
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      width: calc(100% * (#{$number-of-options - 1} / #{$number-of-options}));
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: $secondary-color;
+    }
+    input, label {
+      box-sizing: border-box;
+      flex: 1;
+      user-select: none;
+      cursor: pointer;
+    }
+    label {
+      display: inline-block;
+      position: relative;
+      width: 20%;
+      height: 90%;
+      user-select: none;
+      color: $black-font-color;
+      &::before {
+        content: attr(data-debt-amount);
+        position: absolute;
+        left: 50%;
+        padding-top: 10px;
+        transform: translate(-50%, 45px);
+        font-size: 14px;
+        letter-spacing: 0.4px;
+        font-weight: 400;
+        white-space: nowrap;
+        opacity: 0.85;
+        transition: all 0.15s ease-in-out;
+      }
+      &::after {
+        content: " ";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 15px;
+        height: 15px;
+        border: 2px solid $secondary-color;
+        background: #fff;
+        border-radius: 50%;
+        pointer-events: none;
+        user-select: none;
+        z-index: 1;
+        cursor: pointer;
+        transition: all 0.15s ease-in-out;
+      }
+      &:hover::after {
+        transform: translate(-50%, -50%) scale(1.25);
+      }
+    }
+    input {
+      display: none;
+      &:checked {
+        +label::before {
+          font-weight: 800;
+          opacity: 1;
+        }
+        +label::after {
+          border-width: 4px;
+          transform: translate(-50%, -50%) scale(0.75);
+        }
+        ~#debt-amount-pos {
+          opacity: 1;
+        }
+        @for $i from 1 through $number-of-options {
+          &:nth-child(#{$i * 2 - 1}) ~ #debt-amount-pos {
+            left: #{($i * 20%) - 10%};
+          }
+        }
+      }
+    }
+    #debt-amount-pos {
+      display: block;
+      position: absolute;
+      top: 50%;
+      width: 4px;
+      height: 4px;
+      background: $backgroud-color-main;
+      border-radius: 50%;
+      transition: all 0.15s ease-in-out;
+      transform: translate(-50%, -50%);
+      border: 2px solid $secondary-color;
+      opacity: 0;
+      z-index: 2;
+    }
+  }
+  &:valid {
+    #debt-amount-slider {
+      input {
+        + label::before {
+          transform: translate(-50%, 45px) scale(0.9);
+          transition: all 0.15s linear;
+        }
+        &:checked + label::before {
+          transform: translate(-50%, 45px) scale(1.1);
+          transition: all 0.15s linear;
+        }
+      }
+    }
+  }
+}
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+    width: 24px;
+    opacity: 1;
+    margin-right: 12px;
+  }
+  to {
+    transform: rotate(360deg);
+    width: 24px;
+    opacity: 1;
+    margin-right: 12px;
+  }
+}
+
+.parts{
+  color: $primary-color-font;
+  width: 70%;
+  padding-left: 30px;
+}
+
+
+.cards-blog .blog-bg {
+  display: block;
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative;
+  height: 300px;
+}
+@media screen and (max-width: 768px) {
+  .cards-blog .blog-bg {
+    height: 400px;
+  }
+}
+.cards-blog .blog-text {
+  margin-bottom: 30px;
+  position: relative;
+  width: 100%;
+  padding: 30px;
+  float: left;
+  background: rgba(0, 0, 0, 0.8) url(../images/broken_noise.png) repeat;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.06);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.06);
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+.cards-blog .blog-text .stuff {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid $black-font-color;
+  padding-top: 20px;
+}
+.cards-blog .blog-text .stuff li {
+  list-style: none;
+  display: inline-block;
+  margin-left: 10px;
+  color: $primary-color-font;
+}
+.cards-blog .blog-text .stuff li:first-child {
+  margin-left: 0;
+}
+.cards-blog .blog-text .stuff li:last-child {
+  float: right;
+}
+.cards-blog .blog-text .stuff li:last-child i {
+  padding-right: 0;
+  padding-left: 10px;
+}
+.cards-blog .blog-text .stuff li i {
+  margin-top: 3px;
+  margin-right: 5px;
+  color: $secondary-color;
+  float: left;
+  font-size: 10px;
+  padding-right: 5px;
+}
+.cards-blog .blog-text .stuff li span {
+  margin-top: 3px;
+  margin-right: 5px;
+  color:$secondary-color;
+  float: left;
+  font-size: 12px;
+  padding-right: 5px;
+}
+.cards-blog .blog-text h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.cards-blog .blog-text h4 a {
+  color: $primary-color-font;
+}

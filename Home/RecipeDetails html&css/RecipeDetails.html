@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.carousel.min.css" />
+    <title>Recipe's details</title>
+</head>
+
+<body>
+    <section class="main-class">
+        <section class="images">
+            <img src="images/recipe.png">
+            <img src="images/other.png">
+        </section>
+        <section class="textRecipe">
+            <h3>Butternut Squash Soup</h3>
+            <span><i class="fa fa-cookie-bite"></i>30 mins preparation</span><br>
+            <span><i class="fa fa-utensil-spoon"></i>4 servings</span><br>
+            <div class="ingredients">
+
+            </div>
+        </section>
+    </section>
+    <div class="preperation">
+        <h4>Preperation</h4>
+        <p>1.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren, no sea takimata sanctus est.</p>
+        <p>2.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren, no sea takimata sanctus est.</p>
+        <p>3.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren, no sea takimata sanctus est.</p>
+        <p>4.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren, no sea takimata sanctus est.</p>
+    </div>
+    <div class="mayalso">
+        <h3>You may also like</h3>
+        <div id="owl-demo" class="owl-carousel owl-theme">
+
+            <div class="item"><img src="images/1.png">
+                <div class="text-more">
+                    <p>Miso & Tufu Soup</p>
+                    <span>40 mins</span>
+                </div>
+            </div>
+            <div class="item"><img src="images/2.png">
+                <div class="text-more">
+                    <p>Thai Soup</p>
+                    <span>45 mins</span>
+                </div>
+            </div>
+            <div class="item"><img src="images/3.png">
+                <div class="text-more">
+                    <p>Spicy Tomato Soup</p>
+                    <span>30 mins</span>
+                </div>
+            </div>
+            <div class="item"><img src="images/3.png">
+                <div class="text-more">
+                    <p>Miso & Tufu Soup</p>
+                    <span>40 mins</span>
+                </div>
+            </div>
+            <div class="item"><img src="images/1.png">
+                <div class="text-more">
+                    <p>Miso & Tufu Soup</p>
+                    <span>40 mins</span>
+                </div>
+            </div>
+            <div class="item"><img src="images/2.png">
+                <div class="text-more">
+                    <p>Miso & Tufu Soup</p>
+                    <span>40 mins</span>
+                </div>
+            </div>
+            <div class="item"><img src="images/3.png">
+                <div class="text-more">
+                    <p>Miso & Tufu Soup</p>
+                    <span>40 mins</span>
+                </div>
+            </div>
+            <div class="item"><img src="images/3.png">
+                <div class="text-more">
+                    <p>Miso & Tufu Soup</p>
+                    <span>40 mins</span>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</body>
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script src="/node_modules/owl.carousel/dist/owl.carousel.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#owl-demo").owlCarousel({
+
+            autoPlay: 3000, //Set AutoPlay to 3 seconds
+
+            items: 5,
+            itemsDesktop: [1199, 3],
+            itemsDesktopSmall: [979, 3]
+
+        });
+
+    });
+</script>
+
+</html>
