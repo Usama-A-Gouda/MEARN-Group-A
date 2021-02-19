@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="main-container {{ isDark ? 'dark' : '' }}">
+    <div [formGroup]="contactForm" class="work-with-us">
+        <div class="form">
+            <h1>
+                Contact Us
+            </h1>
+            <form (submit)="sendEmail($event)" [formGroup]="contactForm">
+                <label for="name">Full Name</label>
+                <input type="text" name="user_name" id="name" type="text" formControlName="Username" />
+                <div *ngIf="contactForm.controls['Username'].invalid && (contactForm.controls['Username'].dirty || contactForm.controls['Username'].touched)"
+                    class="alert alert-danger">
+                    <span *ngIf="contactForm.controls['Username'].errors.required">Name is required.</span>
+                    <span *ngIf="contactForm.controls['Username'].errors.minlength">Name must be 3</span>
+                </div>
+
+                <label for="work-email">Email</label>
+                <input type="email" name="user_email" id="work-email" type="text" formControlName="email" />
+                <div *ngIf="contactForm.controls['email'].invalid && (contactForm.controls['email'].dirty || contactForm.controls['email'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="contactForm.controls['email'].errors.required">Email is required.</div>
+                    <div *ngIf="contactForm.controls['email'].errors.minlength">Enter a valid Email</div>
+                </div>
+
+                <label for="project-idea">Massage</label>
+                <textarea name="message" id="project-idea" rows="4" formControlName="massage"></textarea>
+                <div *ngIf="contactForm.controls['massage'].invalid && (contactForm.controls['massage'].dirty || contactForm.controls['massage'].touched)"
+                    class="alert-danger">
+                    <span *ngIf="contactForm.controls['massage'].errors.required">Massage is required.</span>
+                </div>
+
+                <div class="row">
+                    <button class="col-xs-6" [disabled]="!contactForm.valid" type="submit">Send</button>
+                    <div class="col-xs-6" *ngIf="showMsg">
+                        <p class="alert alert-success">
+                            <strong>Massage Send Successfully!</strong>
+                        </p>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="illustration">
+            <img src="../../../../assets/images/chef.jpg" />
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

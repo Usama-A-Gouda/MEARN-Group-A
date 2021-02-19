@@ -1,0 +1,65 @@
+<app-header></app-header>
+<ngx-spinner type="none">
+    <div class="pan-loader">
+        <div class="loader"></div>
+        <div class="pan-container">
+            <div class="pan"></div>
+            <div class="handle"></div>
+        </div>
+    </div>
+</ngx-spinner>
+<div class="main-container pt-5 {{ isDark ? 'dark' : '' }}" *ngIf="user">
+    <div class="show-posts__container">
+        <div class="user">
+            <div class="user__image">
+                <img [src]="sanitizeImageUrl(user.imageURL)" alt="">
+            </div>
+            <div class="user__info">
+                <h3> {{user.username}}
+                </h3>
+                <hr>
+
+                <h5> {{user.email}}
+                </h5>
+
+                <hr>
+                <h6>Posts : <span>{{user.posts.length}}</span>
+
+
+                </h6>
+                <hr>
+
+                <a routerLink="/community/profile/{{user._id}}">View Profile </a>
+            </div>
+
+        </div>
+        <div class="posts">
+            <flash-messages></flash-messages>
+            <ng-container *ngIf="users">
+
+
+                <div class="posts__show mb-4" *ngFor="let user of users;let currentIndex=index">
+                    <div class="author">
+
+                        <img [src]="sanitizeImageUrl(user.imageURL)" alt="">
+
+                        <div class="author__area">
+
+                            <div class="author__info">
+                                <h2>{{user.username}}</h2>
+                                <h5>Number of posts is {{ user.posts.length }}</h5>
+                            </div>
+                            <div class="post__action" (click)="showUser(user._id)">
+                                <i class="fas fa-angle-right"></i>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<app-footer *ngIf="showFooter"></app-footer>

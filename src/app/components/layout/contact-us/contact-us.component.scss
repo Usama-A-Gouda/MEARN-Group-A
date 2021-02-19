@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Spartan:400,700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.main-container {
+  min-height: 100vh;
+  width: 100%;
+}
+.work-with-us {
+  display: grid;
+  grid-template-areas: "form illustration";
+  grid-template-columns: 2fr 1.25fr;
+  max-width: 1000px;
+  padding-top: 5%;
+  margin: 0 auto;
+  overflow: hidden !important;
+}
+
+.form {
+  margin-top: 30px;
+  grid-area: form;
+  padding: 20px 50px 0px 50px;
+  border: 2px solid #000;
+  height: 90%;
+}
+.form h1 {
+  font-size: 28px;
+  margin-bottom: 5px;
+  font-weight: normal;
+  font-family: "Spartan", sans-serif;
+}
+.form form {
+  margin-top: 20px;
+}
+.form label,
+.form input,
+.form textarea,
+.form button {
+  display: block;
+  outline: none;
+  font-family: "Spartan", sans-serif;
+  font-size: 18px;
+  width: 100%;
+}
+.form label,
+.form input {
+  border: 0;
+  height: 40px;
+  line-height: 40px;
+}
+.form input {
+  border-bottom: 2px solid #000;
+  margin-bottom: 40px;
+}
+.form textarea {
+  line-height: 40px;
+  border: 2px solid #000;
+  margin-bottom: 20px;
+  resize: none;
+  padding: 5px;
+}
+.form input:focus,
+.form textarea:focus {
+  border-color: #f74005;
+  color: #f74005;
+}
+.form button {
+  height: 50px;
+  width: 150px;
+  line-height: 50px;
+  border: 2px solid #000;
+  background: #fff;
+  color: #000;
+  font-weight: bold;
+  transition: 0.2s all ease-in-out;
+}
+
+.illustration {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  grid-area: illustration;
+}
+
+.illustration img {
+  width: 70%;
+}
+.illustration .link-rollup {
+  padding: 145px 0 50px 20px;
+}
+.dark {
+  background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url() !important;
+  input,
+  button,
+  textarea {
+    background-color: transparent;
+  }
+}

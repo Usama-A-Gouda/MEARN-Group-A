@@ -1,0 +1,302 @@
+<app-header></app-header>
+<app-chatbot></app-chatbot>
+<ngx-spinner type="none">
+    <div class="pan-loader">
+        <div class="loader"></div>
+        <div class="pan-container">
+            <div class="pan"></div>
+            <div class="handle"></div>
+        </div>
+    </div>
+</ngx-spinner>
+<div *ngIf="recipeDetails" class="recipe-detail-container {{ isDark ? 'dark' : '' }} ">
+    <div class="container-recipe">
+        <a (click)="back()" class="previous round"><i class="fas fa-long-arrow-alt-left"></i></a>
+        <section class="section" id="about">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-lg-6 col-md-6 col-xs-12">
+                        <div class="left-text-content">
+                            <div class="section-heading">
+                                <h2>{{recipeDetails.title}}</h2>
+                            </div>
+                            <div class="container-sum">
+                                <div class="detail">
+                                    <h2>{{recipeDetails.readyInMinutes}}</h2>
+                                    <p>PREPERATION TIME</p>
+                                </div>
+                                <div class="vl"></div>
+                                <div class="detail">
+                                    <h2>{{recipeDetails.servings}}</h2>
+                                    <p>SERVING DISHES</p>
+                                </div>
+                                <div class="vl"></div>
+                                <div class="detail">
+                                    <h2>{{recipeDetails.dishTypes[0]}}</h2>
+                                    <p>DISH TYPE</p>
+                                </div>
+                                <div class="vl"></div>
+                                <div class="detail">
+                                    <h2>{{recipeDetails.healthScore}} </h2>
+                                    <p>HEALTH SCORE</p>
+                                </div>
+                            </div>
+                            <div class="options">
+                                <div class="btn_wrap">
+                                    <span class="you-would">Add to favorite</span>
+                                    <div class="container">
+
+                                        <i class="fas fa-heart icon {{flagFav ? 'fav' : ''}}" (click)="btnClickedFav()"></i>
+
+                                        <i onkeypress="return false" (click)="btnClicked()" class="fas fa-share-alt icon"></i>
+                                    </div>
+                                </div>
+                                <div class="wrapper">
+                                    <input type="checkbox" />
+                                    <div class="btn"><i class="fas fa-info"></i></div>
+                                    <div class="tooltip">
+                                        <span>Here you can add recipe to your favorite recipes , also you can share the
+                                            recipe in the community</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12">
+                        <div class="right-content">
+                            <div class="thumb">
+                                <img src="https://spoonacular.com/recipeImages/{{recipeDetails.id}}-636x393.jpg">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="tm-nav-container-outer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="navbar navbar-expand-lg" id="tm-main-nav">
+                        <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbar-nav" aria-controls="navbar-nav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="dark-blue-text"><i class="fas fa-bars"></i></span>
+                        </button>
+                        <div class="collapse navbar-collapse tm-nav text-center" id="navbar-nav">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item {{flag2? 'active' : ''}}" (click)="ingActive()">
+                                    <a class="nav-link tm-nav-link">Ingredients <span
+                                            class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item {{flag3? 'active' : ''}}" (click)="instActive()">
+                                    <a class="nav-link tm-nav-link">Instructions</a>
+                                </li>
+                                <li class="nav-item {{flag4? 'active' : ''}}" (click)="summActive()">
+                                    <a class="nav-link tm-nav-link">Summary</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="flag2 == true">
+        <div id="details">
+            <div id="first-section">
+                <div class="heading">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="header-section-title">Ingredients needed for recipe</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="first-section1">
+                <div class="container">
+                    <div class="row">
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <section id="cd-timeline" class="cd-container">
+                                <div class="cd-timeline-block mb-5">
+                                    <div class="cd-timeline-img cd-picture">
+                                        <img src="../../../../../assets/images/ingredient.webp" alt="Picture">
+                                    </div>
+
+                                    <div class="cd-timeline-content service-box-content mb-5">
+                                        <h6 style="text-transform: capitalize;" *ngFor="let ingredients of recipeDetails.extendedIngredients">
+                                            <i class="fas fa-check"></i> {{ingredients.original}}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="flag3 == true">
+        <div id="details">
+            <div id="first-section">
+                <div class="heading">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="header-section-title">Insructions needed to make the recipe</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="first-section1">
+                <div class="container">
+                    <div class="row">
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <section id="cd-timeline" class="cd-container">
+                                <div class="cd-timeline-block mb-5" *ngFor="let steps of recipeDetails.analyzedInstructions[0].steps">
+                                    <div class="cd-timeline-img cd-picture">
+                                        <img src="../../../../../assets/images/step.webp" alt="Picture">
+                                    </div>
+
+                                    <div class="cd-timeline-content service-box-content mb-5">
+                                        <h6> <i class="fas fa-arrow-right"></i> STEP NUMBER : {{steps.number}}
+                                        </h6>
+                                        <h6 *ngIf="steps.equipment.length >0">
+                                            <i class="fas fa-utensils"></i> Equipment needed :<span style="text-transform: capitalize;" *ngFor="let equipments of steps.equipment;let currentIndex=index">
+                                                {{equipments.name}},</span>
+                                        </h6>
+                                        <h6 *ngIf="steps.ingredients.length >0">
+                                            <i class="fas fa-cookie-bite"></i> Ingredients needed :<span style="text-transform: capitalize;" *ngFor="let ingredients of steps.ingredients;let currentIndex=index">
+                                                {{ingredients.name}},</span><br>
+                                        </h6>
+                                        <h6><i class="fas fa-arrow-right"></i> {{steps.step}}</h6>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="flag4 == true">
+        <div id="details">
+            <div id="first-section">
+                <div class="heading">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="header-section-title">Summary about recipe</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="first-section1">
+                <div class="container">
+                    <div class="row">
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <section id="cd-timeline" class="cd-container">
+                                <div class="cd-timeline-block mb-5">
+                                    <div class="cd-timeline-img cd-picture">
+                                        <img src="../../../../../assets/images/summary.png" alt="Picture">
+                                    </div>
+
+                                    <div class="cd-timeline-content service-box-content mb-5">
+                                        <h6 [innerHtml]="recipeDetails.summary"></h6>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <button class="button" > Create Post</button> -->
+    <div class="popup {{(shareToCommunityFlag && isSignIn) == true ? 'target' : '' }}" id="popup">
+        <div style="background-color: black;" class="popup-inner">
+            <div class="popup__photo">
+                <img src="../../../../../assets/images/post.jpeg" alt="">
+            </div>
+            <form onsubmit="return false" class="popup__text ui  form">
+
+                <div class="field form-group">
+                    <label class="pop-form-label">Post Title</label>
+                    <input type="text" #title class="form-control" placeholder="Title" value="{{recipeDetails.title}}">
+                </div>
+                <div class="field form-group">
+                    <label class="pop-form-label">Your Post</label>
+                    <textarea #content class="form-control" rows="2" placeholder="Your Post " value="{{currentURL}}"></textarea>
+                </div>
+                <button (click)="createPost(title.value , content.value)" class="ui black button">Submit</button>
+            </form>
+
+            <a class="popup__close" (click)="shareToCommunityFlag=false">X</a>
+        </div>
+    </div>
+    <!-- <button class="button" > Create Post</button> -->
+    <div class="popup {{ ((shareToCommunityFlag && !isSignIn) ||(favoriteButtonFlag && !isSignIn)) == true ? 'target' : '' }}" id="popup" class="main-container">
+        <div class="popup-inner">
+            <div class=" {{ flag ? 'right-panel-active container' : 'container'}}" id="container">
+                <div class="form-container sign-up-container">
+                    <form (submit)="stopSubmitting()">
+
+                        <input type="text" placeholder="Username" #usernameInput />
+                        <input type="email" placeholder="Email" #emailInput />
+                        <label class="file">
+                            <input name="image" (change)="onFileChanged($event)" type="file" id="file"
+                                aria-label="File browser example">
+                            <span class="file-custom"></span>
+                        </label>
+                        <input type="password" placeholder="Password" #passwordInput />
+
+                        <input type="password" placeholder="Confirmed Password" #confirmedPasswordInput />
+                        <button (click)="singUp(usernameInput.value, emailInput.value, passwordInput.value, confirmedPasswordInput.value)">Sign
+                            Up</button>
+
+                    </form>
+                </div>
+                <div class="form-container sign-in-container">
+                    <form (submit)="stopSubmitting()">
+                        <h1>Sign in</h1>
+                        <input type="email" placeholder="Email" #emailInputLogin />
+                        <input type="password" placeholder="Password" #passwordInputLogin />
+                        <!-- <a href="#">Forgot your password?</a> -->
+                        <button (click)="login(emailInputLogin.value,passwordInputLogin.value)">Sign In</button>
+                    </form>
+                </div>
+                <div class="overlay-container">
+                    <div class="overlay">
+                        <div class="overlay-panel overlay-left">
+                            <h1>Welcome Back!</h1>
+                            <p>To keep connected with us please login with your personal info</p>
+                            <button (click)="buttonClicked()" class=" ghost " id="signIn ">Sign In</button>
+                        </div>
+                        <div class="overlay-panel overlay-right ">
+                            <h1>Hello, Friend!</h1>
+                            <p>Enter your personal details and start journey with us</p>
+                            <button class="ghost " (click)="buttonClicked() " id="signUp ">Sign Up</button>
+                        </div>
+                    </div>
+                </div>
+                <a class="popup__close" (click)="shareToCommunityFlag=false;favoriteButtonFlag=false">X</a>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer *ngIf="showFooter"></app-footer>
