@@ -27,6 +27,13 @@ module.exports = (req, res, next) => {
     return next(error);
   }
 
+  if (decodedToken.isBlocked == true) {
+    const error = new Error();
+    error.message =
+      "U Have not right to access to this page , Please contact to admin!!!!!";
+    error.statusCode = 403;
+    return next(error);
+  }
   req.userID = decodedToken.userID || decodedToken.adminID;
   next();
 };

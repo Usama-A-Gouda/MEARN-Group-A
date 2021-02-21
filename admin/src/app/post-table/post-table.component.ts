@@ -7,6 +7,7 @@ import { PostContent } from './../models/postContent';
   templateUrl: './post-table.component.html',
   styleUrls: ['./post-table.component.css']
 })
+
 export class PostTableComponent implements OnInit {
   posts: PostContent[] = [];
   beforSearch: PostContent[] = [];

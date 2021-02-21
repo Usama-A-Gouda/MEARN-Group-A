@@ -121,8 +121,6 @@ export class RecipeDetailsComponent implements OnInit {
           response['Data'].userID
         );
         this.userID = this._userService.getUserID();
-
-
       },
       (error) => {
         console.log(error);
@@ -206,18 +204,19 @@ export class RecipeDetailsComponent implements OnInit {
         }
         console.log(this.flagFav);
       },
-      (error) => {
-
-      }
+      (error) => { }
     );
   }
   createPost(title: string, content: string) {
     // this.postContent.title = title;
     // this.postContent.content = content;
     // this.postContent.imageURL = imageURL;
+    const image = `https://spoonacular.com/recipeImages/${this.recipeDetails.id}-636x393.jpg`;
+    console.log(image);
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
+    formData.append('imageURL', image);
     // this.postContent.imageURL = formData;
     // console.log(this.postContent.imageURL);
     this._communityService.createPost('post/create', formData).subscribe(
@@ -227,6 +226,7 @@ export class RecipeDetailsComponent implements OnInit {
         this.user.posts.push(response['Data']);
         let successMessage = response['Message'];
         console.log(successMessage);
+        this.shareToCommunityFlag = false;
       },
       (error) => {
         let errorMessage = error['error'].Error;

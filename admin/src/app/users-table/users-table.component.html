@@ -46,6 +46,9 @@
                                         Created AT | Day
                                     </th>
                                     <th>
+                                        Block
+                                    </th>
+                                    <th>
                                         Actions
                                     </th>
                                 </thead>
@@ -70,6 +73,11 @@
                                             {{user.favoritePosts.length}}
                                         </td>
                                         <td>{{ stringAsDate(user.createdAt) | date:'dd/MM/yy' }}
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" class="example-margin" (change)="blockUser(user._id,currentIndex)">
+
+
                                         </td>
                                         <td>
                                             <i class="material-icons" routerLink="/dashboard/user/{{user._id}}/details">remove_red_eye</i>

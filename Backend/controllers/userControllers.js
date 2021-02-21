@@ -92,6 +92,7 @@ exports.loginUser = async (req, res, next) => {
     error.message = "Email OR Passwrod Is Not Correct.";
     return next(error);
   }
+
   // const isEqual = await bcrypt.compare(password, foundUser.password);
   // if (!isEqual) {
   //   const error = new Error();
@@ -100,10 +101,17 @@ exports.loginUser = async (req, res, next) => {
   //   return next(error);
   // }
   try {
+    if (foundUser.isBlocked == true) {
+      const error = new Error();
+      error.message = "You have no right to login";
+      error.statusCode = 403;
+      throw error;
+    }
     const token = jwt.sign(
       {
         username: foundUser.username,
         userID: foundUser._id,
+        isBlocked: foundUser.isBlocked,
       },
       "nanananaHabibaIsBananaaaa"
       // { expiresIn: "2h" }
@@ -504,6 +512,48 @@ exports.deleteFeedback = async (req, res, next) => {
     return res.status(200).json({
       Message: "Feedback Is Deleted",
       Data: feedback,
+      Success: true,
+      Error: null,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    err.message = "Somthing Went Wrong !";
+    return next(err);
+  }
+};
+
+exports.blockUser = async (req, res, next) => {
+  const { isBlocked } = req.body;
+  console.log("blocked?", isBlocked);
+  try {
+    const foundUser = await User.findById(req.params.userId);
+    if (!foundUser) {
+      const error = new Error();
+      error.statusCode = 422;
+      error.message = "No User With This ID , Please Try With Another ID";
+      return next(error);
+    }
+    const admin = await Admin.findById("6027109bb911cc1e1c5d0540");
+    if (!admin) {
+      const error = new Error();
+      error.statusCode = 403;
+      error.message = "Error , You Can't Delete This Post";
+      return next(error);
+    }
+    const user = await User.findByIdAndUpdate(req.params.userId, { isBlocked });
+    let message;
+    console.log("after edit :", user);
+    if (user.isBlocked == true) {
+      message = "User Blocked Successfully";
+    } else {
+      message = "User Unblocked Successfully";
+    }
+
+    return res.status(200).json({
+      Message: message,
+      Data: user,
       Success: true,
       Error: null,
     });

@@ -56,9 +56,14 @@ exports.createPost = async (req, res, next) => {
 
     //   throw error;
     // }
-    let image;
-    if (req.file) {
-      image = req.file.path;
+    if (!imageURL.includes("https")) {
+      let image;
+      if (req.file) {
+        image = req.file.path;
+      }
+    } else {
+      console.log("Contains HTTPS");
+      image = imageURL;
     }
     // console.log(imageURL);
     // console.log(req.file.filename, "file");

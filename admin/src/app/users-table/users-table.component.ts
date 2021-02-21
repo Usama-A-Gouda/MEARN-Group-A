@@ -11,6 +11,8 @@ export class UsersTableComponent implements OnInit {
   users: User[] = [];
   beforSearch: User[] = [];
   isResponsDone = false;
+  isBlocked = false;
+  blockedUserIndex = [];
   constructor(private _communityService: CommunityService) { }
 
   ngOnInit() {
@@ -20,6 +22,7 @@ export class UsersTableComponent implements OnInit {
         this.users = response["Data"]
         this.beforSearch = response["Data"];
         console.log(this.users);
+
 
       })
 
@@ -59,6 +62,46 @@ export class UsersTableComponent implements OnInit {
     }
 
 
+  }
+  ngAfterViewInit() {
+    this.users.filter((user, index) => {
+      if (user.isBlocked == true) {
+        var cb = document.querySelectorAll('.example-margin')[index] as HTMLInputElement;
+        cb.checked = true;
+        console.log(cb);
+      }
+
+
+
+    })
+  }
+  ngDoCheck() {
+
+
+
+  }
+
+  blockUser(userID, index) {
+
+    // if (this.blockedUserIndex != index) {
+    //   this.blockedUserIndex = index;
+    // }
+    // else {
+    //   this.blockedUserIndex = null;
+    // }
+    document.querySelectorAll('tr')[index].classList.toggle('block-theme');
+    this.isBlocked = !this.isBlocked;
+    this._communityService.editUser('user/block-user', userID, { isBlocked: this.isBlocked }).subscribe(
+      response => {
+
+
+      },
+      error => {
+        console.log(error);
+      }
+    )
+    console.log("ID", userID);
+    console.log("blocked?", this.isBlocked);
   }
 
 }
