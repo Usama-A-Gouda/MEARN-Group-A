@@ -113,4 +113,7 @@ export class CommunityService {
       headers: { authorization: this._userService.getToken() },
     });
   }
+  createFeedBack(url, message) {
+    return this._httpClient.post(`${environment.communityURL}/${url}`, message);
+  }
 }

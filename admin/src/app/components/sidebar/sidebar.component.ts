@@ -12,6 +12,8 @@ export const ROUTES: RouteInfo[] = [
   { path: 'users-table', title: 'Users Table', icon: 'people', class: '' },
   { path: 'posts-table', title: 'Posts Table', icon: 'article', class: '' },
   { path: 'comments-table', title: 'Comments Table', icon: 'comment', class: '' },
+  { path: 'contact-table', title: 'Contact Table', icon: 'email', class: '' },
+
 
 
 

@@ -9,6 +9,7 @@ import { CommunityService } from 'app/services/community.service';
 })
 export class UsersTableComponent implements OnInit {
   users: User[] = [];
+  beforSearch: User[] = [];
   isResponsDone = false;
   constructor(private _communityService: CommunityService) { }
 
@@ -17,7 +18,7 @@ export class UsersTableComponent implements OnInit {
       response => {
         this.isResponsDone = true;
         this.users = response["Data"]
-
+        this.beforSearch = response["Data"];
         console.log(this.users);
 
       })
@@ -32,14 +33,32 @@ export class UsersTableComponent implements OnInit {
       this._communityService.delete(`user/delete-user/${userID}`)
         .subscribe(response => {
           console.log(response);
-          this.users.splice(index, 1)
 
+          this.users.splice(index, 1)
+          this.beforSearch = this.users;
         }, error => {
           console.log(error)
         }
 
         )
     }
+  }
+  search(event) {
+
+    if (event.target.value.length == 0) {
+      return this.users = this.beforSearch;
+
+    }
+    else {
+      this.users = this.users.filter((user, index) => {
+        if ((user.username.includes(event.target.value)) || (user.email.includes(event.target.value))) {
+          return this.users[index];
+        }
+
+      })
+    }
+
+
   }
 
 }

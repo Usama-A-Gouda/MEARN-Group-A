@@ -30,8 +30,10 @@
                 </h6>
                 <hr>
                 <div class="links-container">
-                    <a class="ui inverted olive button" *ngIf="userID == user._id" routerLink="/community/edit-profile">Edit Profile </a>
-                    <a class="ui inverted red button" *ngIf="userID == user._id" routerLink="/community/favourites-posts">Favorite Posts</a>
+                    <a class="ui inverted orange button" *ngIf="userID == user._id"
+                        routerLink="/community/edit-profile">Edit Profile </a>
+                    <a class="ui inverted red button" *ngIf="userID == user._id"
+                        routerLink="/community/favourites-posts">Favorite Posts</a>
                 </div>
             </div>
 
@@ -53,14 +55,18 @@
                                 <h6>{{ stringAsDate(post.createdAt) | date:'HH:mm' }}</h6>
 
                             </div>
-                            <div class="post__action {{changeValueToCurrentIndex == currentIndex ? 'move-to-left' : ''}}">
+                            <div
+                                class="post__action {{changeValueToCurrentIndex == currentIndex ? 'move-to-left' : ''}}">
 
-                                <i class="{{changeValueToCurrentIndex == currentIndex ? 'fas fa-angle-right' : 'fas fa-angle-left'}}" (click)="setCurrentIndexValue(currentIndex)"></i>
+                                <i class="{{changeValueToCurrentIndex == currentIndex ? 'fas fa-angle-right' : 'fas fa-angle-left'}}"
+                                    (click)="setCurrentIndexValue(currentIndex)"></i>
 
 
                                 <i class="fas fa-eye" routerLink="/community/get-post/{{post._id}}"></i>
-                                <i *ngIf="userID == user._id" (click)="editButtonClicked(post._id,currentIndex)" class="fas fa-edit"></i>
-                                <i *ngIf="userID == user._id" class="fas fa-trash" (click)="deletePost(post._id , currentIndex)"></i>
+                                <i *ngIf="userID == user._id" (click)="editButtonClicked(post._id,currentIndex)"
+                                    class="fas fa-edit"></i>
+                                <i *ngIf="userID == user._id" class="fas fa-trash"
+                                    (click)="deletePost(post._id , currentIndex)"></i>
                             </div>
                         </div>
 
@@ -77,7 +83,8 @@
                         <div class="comments">
                             <div class="comments__show">
 
-                                <div class="comment__author" *ngFor="let comment of post.comments;let currentCommentIndex=index">
+                                <div class="comment__author"
+                                    *ngFor="let comment of post.comments;let currentCommentIndex=index">
                                     <img [src]="sanitizeImageUrl(comment.author.imageURL)" alt="">
 
                                     <div class="comment__author--info">
@@ -88,7 +95,8 @@
                                     <div class="comment__action" *ngIf="userID == comment.author._id">
 
                                         <i (click)="getCommentValue(comment)" class="fas fa-edit"></i>
-                                        <i (click)="deleteComment(post._id,comment._id,currentIndex,currentCommentIndex)" class="fas fa-trash"></i>
+                                        <i (click)="deleteComment(post._id,comment._id,currentIndex,currentCommentIndex)"
+                                            class="fas fa-trash"></i>
                                     </div>
                                 </div>
 
@@ -107,8 +115,10 @@
                     <div class="add-comment ui large form" *ngIf="user">
                         <img [src]="sanitizeImageUrl(user.imageURL)" alt="">
                         <!-- <button class="ui red button ">Create Post</button> -->
-                        <textarea rows="1" placeholder="Leave Your Comment" #commentInput value="{{isEditComment? commentValue : ''  }}"></textarea>
-                        <i (click)="addComment(commentInput.value,post._id,currentIndex) ;commentInput.value='' ;isEditClicked = false;" class="fas fa-arrow-circle-right"></i>
+                        <textarea rows="1" placeholder="Leave Your Comment" #commentInput
+                            value="{{isEditComment? commentValue : ''  }}"></textarea>
+                        <i (click)="addComment(commentInput.value,post._id,currentIndex) ;commentInput.value='' ;isEditClicked = false;"
+                            class="fas fa-arrow-circle-right"></i>
                     </div>
                 </div>
             </ng-container>
@@ -127,22 +137,32 @@
 
             <div class="field form-group">
                 <label class="pop-form-label">Post Title</label>
-                <input type="text" #title formControlName="Title" class="form-control" placeholder="Title" value="{{isEditClicked ? postContent.title : ''}}">
-                <div *ngIf="form.controls['Title'].invalid && (form.controls['Title'].touched || form.controls['Title'].dirty)">
-                    <h6 class="form-text alert alert-danger role-alert" *ngIf="form.controls['Title'].hasError('required')">required Title
+                <input type="text" #title formControlName="Title" class="form-control" placeholder="Title"
+                    value="{{isEditClicked ? postContent.title : ''}}">
+                <div
+                    *ngIf="form.controls['Title'].invalid && (form.controls['Title'].touched || form.controls['Title'].dirty)">
+                    <h6 class="form-text alert alert-danger role-alert"
+                        *ngIf="form.controls['Title'].hasError('required')">required Title
                     </h6>
-                    <h6 class="form-text alert alert-danger role-alert" *ngIf="form.controls['Title'].hasError('minlength')">min length is 10</h6>
-                    <h6 class="form-text alert alert-danger role-alert" *ngIf="form.controls['Title'].hasError('maxlength')">max length is 255</h6>
+                    <h6 class="form-text alert alert-danger role-alert"
+                        *ngIf="form.controls['Title'].hasError('minlength')">min length is 10</h6>
+                    <h6 class="form-text alert alert-danger role-alert"
+                        *ngIf="form.controls['Title'].hasError('maxlength')">max length is 255</h6>
                 </div>
             </div>
             <div class="field form-group">
                 <label class="pop-form-label">Your Post</label>
-                <textarea #content formControlName="Content" class="form-control" rows="2" placeholder="Your Post " value="{{isEditClicked ? postContent.content : ''}}"></textarea>
-                <div *ngIf="form.controls['Content'].invalid && (form.controls['Content'].touched || form.controls['Content'].dirty)">
-                    <h6 class="form-text alert alert-danger role-alert" *ngIf="form.controls['Content'].hasError('required')">required Content
+                <textarea #content formControlName="Content" class="form-control" rows="2" placeholder="Your Post "
+                    value="{{isEditClicked ? postContent.content : ''}}"></textarea>
+                <div
+                    *ngIf="form.controls['Content'].invalid && (form.controls['Content'].touched || form.controls['Content'].dirty)">
+                    <h6 class="form-text alert alert-danger role-alert"
+                        *ngIf="form.controls['Content'].hasError('required')">required Content
                     </h6>
-                    <h6 class="form-text alert alert-danger role-alert" *ngIf="form.controls['Content'].hasError('minlength')">min length is 20</h6>
-                    <h6 class="form-text alert alert-danger role-alert" *ngIf="form.controls['Content'].hasError('maxlength')">max length is 1024</h6>
+                    <h6 class="form-text alert alert-danger role-alert"
+                        *ngIf="form.controls['Content'].hasError('minlength')">min length is 20</h6>
+                    <h6 class="form-text alert alert-danger role-alert"
+                        *ngIf="form.controls['Content'].hasError('maxlength')">max length is 1024</h6>
                 </div>
             </div>
             <div class="field">
@@ -152,7 +172,9 @@
                     <span class="file-custom"></span>
                 </label>
             </div>
-            <button [disabled]="form.invalid" (click)="isEditClicked ? editPost(title.value,content.value) : '' ; title.value='' ; content.value='' ; isEditClicked = false" class="ui black button">Submit</button>
+            <button [disabled]="form.invalid"
+                (click)="isEditClicked ? editPost(title.value,content.value) : '' ; title.value='' ; content.value='' ; isEditClicked = false"
+                class="ui black button">Submit</button>
         </form>
 
         <a (click)="isEditClicked = false" class="popup__close">X</a>

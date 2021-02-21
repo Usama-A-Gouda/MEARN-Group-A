@@ -9,6 +9,7 @@ import { PostContent } from './../models/postContent';
 })
 export class PostTableComponent implements OnInit {
   posts: PostContent[] = [];
+  beforSearch: PostContent[] = [];
   isResponsDone = false;
   constructor(private _communityService: CommunityService) { }
 
@@ -18,6 +19,7 @@ export class PostTableComponent implements OnInit {
       response => {
         this.isResponsDone = true;
         this.posts = response["Data"]
+        this.beforSearch = response["Data"]
 
         console.log(this.posts);
 
@@ -35,12 +37,29 @@ export class PostTableComponent implements OnInit {
         .subscribe(response => {
           console.log(response);
           this.posts.splice(index, 1)
-
+          this.beforSearch.splice(index, 1);
         }, error => {
           console.log(error)
         }
 
         )
     }
+  }
+  search(event) {
+
+    if (event.target.value.length == 0) {
+      return this.posts = this.beforSearch;
+
+    }
+    else {
+      this.posts = this.posts.filter((post, index) => {
+        if ((post.author['username'].includes(event.target.value)) || (post.title.includes(event.target.value))) {
+          return this.posts[index];
+        }
+
+      })
+    }
+
+
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
+import { CommunityService } from 'src/app/services/community.service';
 
 @Component({
   selector: 'contact-us',
@@ -10,15 +11,15 @@ import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
 export class ContactUsComponent {
   contactForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private _communityService: CommunityService) {
     this.createForm();
   }
 
   createForm() {
     this.contactForm = this.fb.group({
-      Username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      massage: ['', Validators.required],
+      fullname: ['', [Validators.required, Validators.minLength(4)]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(6)]],
+      message: ['', [Validators.required, Validators.min(10)]],
     });
   }
 
@@ -26,12 +27,19 @@ export class ContactUsComponent {
 
   public sendEmail(e: Event) {
     e.preventDefault();
+    this._communityService.createFeedBack('user/feedback', this.contactForm.value).subscribe(response => {
+      console.log(response)
+    }, error => {
+      console.log(error)
+    }
+    )
+
     emailjs
       .sendForm(
-        'service_h2o6b14',
-        'template_wnssfcj',
+        'service_z30fjyd',
+        'template_jopjbyo',
         e.target as HTMLFormElement,
-        'user_8j9cXPrxdnov1nmKkn8oT'
+        'user_wuif2HZJf7QQ3YJwquV1d'
       )
       .then(
         (result: EmailJSResponseStatus) => {
@@ -55,4 +63,5 @@ export class ContactUsComponent {
       this.isDark = false;
     }
   }
+
 }

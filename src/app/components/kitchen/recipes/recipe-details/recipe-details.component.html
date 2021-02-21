@@ -228,7 +228,7 @@
         </div>
     </div>
     <!-- <button class="button" > Create Post</button> -->
-    <div class="popup {{(shareToCommunityFlag && isSignIn) == true ? 'target' : '' }}" id="popup">
+    <div class="popup {{  shareToCommunityFlag==true && isSignIn==true ? 'target' : '' }} " id="popup">
         <div style="background-color: black;" class="popup-inner">
             <div class="popup__photo">
                 <img src="../../../../../assets/images/post.jpeg" alt="">
@@ -246,11 +246,11 @@
                 <button (click)="createPost(title.value , content.value)" class="ui black button">Submit</button>
             </form>
 
-            <a class="popup__close" (click)="shareToCommunityFlag=false">X</a>
+            <a class="popup__close" (click)="shareToCommunityFlag = false">X</a>
         </div>
     </div>
     <!-- <button class="button" > Create Post</button> -->
-    <div class="popup {{ ((shareToCommunityFlag && !isSignIn) ||(favoriteButtonFlag && !isSignIn)) == true ? 'target' : '' }}" id="popup" class="main-container">
+    <div class="popup {{ (shareToCommunityFlag && !isSignIn) ||(favoriteButtonFlag && !isSignIn)  ? 'target' : '' }}" id="popup" class="main-container">
         <div class="popup-inner">
             <div class=" {{ flag ? 'right-panel-active container' : 'container'}}" id="container">
                 <div class="form-container sign-up-container">

@@ -11,6 +11,8 @@ import { PostTableComponent } from './../../post-table/post-table.component';
 import { PostDetailsComponent } from './../../post-details/post-details.component';
 import { CommentDetailsComponent } from './../../comment-details/comment-details.component';
 import { CommentTableComponent } from './../../comment-table/comment-table.component';
+import { ContactTableComponent } from './../../contact-table/contact-table.component';
+
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -26,6 +28,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'comments-table', component: CommentTableComponent },
     { path: 'comment/:id', component: CommentDetailsComponent },
     { path: 'comment/:id/details', component: CommentDetailsComponent },
+    { path: 'contact-table', component: ContactTableComponent },
 
     // { path: 'typography', component: TypographyComponent },
     // { path: 'icons', component: IconsComponent },

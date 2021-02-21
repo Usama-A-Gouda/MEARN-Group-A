@@ -11,6 +11,7 @@ export class CommentTableComponent implements OnInit {
 
   comments: Comment[] = [];
   isResponsDone = false;
+  beforSearch: Comment[] = [];
   constructor(private _communityService: CommunityService) { }
 
   ngOnInit() {
@@ -19,7 +20,7 @@ export class CommentTableComponent implements OnInit {
       response => {
         this.isResponsDone = true;
         this.comments = response["Data"]
-
+        this.beforSearch = response["Data"];
         console.log(this.comments);
 
       })
@@ -36,6 +37,7 @@ export class CommentTableComponent implements OnInit {
         .subscribe(response => {
           console.log(response);
           this.comments.splice(index, 1)
+          this.beforSearch.splice(index, 1);
 
         }, error => {
           console.log(error)
@@ -43,6 +45,23 @@ export class CommentTableComponent implements OnInit {
 
         )
     }
+  }
+  search(event) {
+
+    if (event.target.value.length == 0) {
+      return this.comments = this.beforSearch;
+
+    }
+    else {
+      this.comments = this.comments.filter((comment, index) => {
+        if ((comment.comment.includes(event.target.value)) || (comment.author['username'].includes(event.target.value))) {
+          return this.comments[index];
+        }
+
+      })
+    }
+
+
   }
 
 }

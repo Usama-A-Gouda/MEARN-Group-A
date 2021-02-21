@@ -4,7 +4,12 @@ const Comment = require("../models/comment");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Admin = require("../models/admin");
-const { registerValidation, loginValidation } = require("../validation");
+const Contact = require("../models/contact-us");
+const {
+  registerValidation,
+  loginValidation,
+  contactUsValidation,
+} = require("../validation");
 exports.createUser = async (req, res, next) => {
   // req.body => {username : '' , password : ""}
   try {
@@ -283,6 +288,24 @@ exports.getUsersByUsername = async (req, res, next) => {
       path: "comments",
       model: "Comment",
     });
+  const foundPost = await Post.find({
+    title: { $regex: username, $options: "i" },
+  })
+    .populate({ path: "author", model: "User" })
+    .populate({
+      path: "comments",
+      options: { sort: { createdAt: -1 } },
+      populate: {
+        path: "author",
+        model: "User",
+      },
+    });
+  const foundComment = await Comment.find({
+    comment: { $regex: username, $options: "i" },
+  }).populate({
+    path: "author",
+    model: "User",
+  });
   console.log(foundUser);
   if (!foundUser) {
     const error = new Error();
@@ -290,9 +313,23 @@ exports.getUsersByUsername = async (req, res, next) => {
     error.message = "No Users With This Username";
     return next(error);
   }
+  if (!foundPost) {
+    const error = new Error();
+    error.statusCode = 401;
+    error.message = "No Post Title Contains This Name";
+    return next(error);
+  }
+  if (!foundComment) {
+    const error = new Error();
+    error.statusCode = 401;
+    error.message = "No Comments Contains This Name";
+    return next(error);
+  }
   res.status(200).json({
     Data: foundUser,
-    Message: `This User Is Found Succcefully`,
+    foundPost,
+    foundComment,
+    Message: `This Data Is Found Succcefully`,
     Error: null,
     Success: true,
   });
@@ -383,6 +420,98 @@ exports.getUsers = async (req, res, next) => {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
+    return next(err);
+  }
+};
+exports.createFeedBack = async (req, res, next) => {
+  // req.body => {username : '' , password : ""}
+  try {
+    console.log(req.body);
+
+    const errors = contactUsValidation(req.body).error;
+
+    if (errors) {
+      const error = new Error(errors.details[0].message);
+      error.statusCode = 422;
+      throw error;
+    }
+    const newMessage = new Contact(req.body);
+    await newMessage.save();
+    return res.status(201).json({
+      Data: newMessage,
+      Message: "Message Sent Successfully",
+      Error: null,
+      Success: true,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+
+    return next(err);
+  }
+};
+
+exports.getFeedbackMessages = async (req, res, next) => {
+  try {
+    const allMessages = await Contact.find({}).sort({ createdAt: -1 });
+
+    if (!allMessages) {
+      const error = new Error();
+      error.statusCode = 401;
+      error.message = "Not Messages Are Found";
+      throw error;
+    }
+    const admin = await Admin.findById("6027109bb911cc1e1c5d0540");
+
+    if (!admin) {
+      const error = new Error();
+      error.statusCode = 403;
+      error.message = "Error , Unauthorized!!";
+      return next(error);
+    }
+    res.status(200).json({
+      Data: allMessages,
+      Message: "Messages Are Found Successfully",
+      Success: true,
+      Error: null,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    return next(err);
+  }
+};
+exports.deleteFeedback = async (req, res, next) => {
+  try {
+    const foundFeedback = await Contact.findById(req.params.id);
+    if (!foundFeedback) {
+      const error = new Error();
+      error.statusCode = 422;
+      error.message = "No Feedback With This ID , Please Try With Another ID";
+      return next(error);
+    }
+    const admin = await Admin.findById("6027109bb911cc1e1c5d0540");
+
+    if (!admin) {
+      const error = new Error();
+      error.statusCode = 403;
+      error.message = "Error , You Can't Delete This Post";
+      return next(error);
+    }
+    const feedback = await Contact.findByIdAndDelete(req.params.id);
+    return res.status(200).json({
+      Message: "Feedback Is Deleted",
+      Data: feedback,
+      Success: true,
+      Error: null,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    err.message = "Somthing Went Wrong !";
     return next(err);
   }
 };

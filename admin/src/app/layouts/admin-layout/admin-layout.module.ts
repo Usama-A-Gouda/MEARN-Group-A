@@ -25,6 +25,7 @@ import { PostTableComponent } from 'app/post-table/post-table.component';
 import { PostDetailsComponent } from 'app/post-details/post-details.component';
 import { CommentTableComponent } from 'app/comment-table/comment-table.component';
 import { CommentDetailsComponent } from 'app/comment-details/comment-details.component';
+import { ContactTableComponent } from 'app/contact-table/contact-table.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { CommentDetailsComponent } from 'app/comment-details/comment-details.com
     PostDetailsComponent,
     CommentTableComponent,
     CommentDetailsComponent,
+    ContactTableComponent,
 
   ],
   exports: [

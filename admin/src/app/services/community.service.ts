@@ -133,7 +133,7 @@ export class CommunityService {
       }
     );
   }
-  delete(url: string,) {
+  delete(url: string) {
     return this._httpClient.delete(
       `${environment.communityURL}/${url}`,
       {
@@ -141,6 +141,7 @@ export class CommunityService {
       }
     );
   }
+
   // get all comments
 
   // getAllComments(url: string) {

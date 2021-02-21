@@ -28,10 +28,25 @@
                 </h5>
 
                 <hr>
-                <h6>Posts : <span>{{user.posts.length}}</span>
+
+                <div class="user-stats">
+
+                    <h6 data-tooltip="Posts" data-position="top left" data-variation="wide">
+                        <i class="fas fa-newspaper "></i>
+                        <span>{{user.posts.length}}</span>
+                    </h6>
+                    <h6 data-tooltip="Comments" data-position="top left" data-variation="wide"><i class="fas fa-comment"></i> <span>{{user.comments.length}}</span>
+                    </h6>
+                    <h6 data-tooltip="Favorite Posts" data-position="top right" data-variation="wide"><i class="fas fa-star"></i>
+                        <span>{{user.favoritePosts.length}}</span>
+                    </h6>
+                    <h6 data-tooltip="Favorite Recipies" data-position="top left" data-variation="wide">
+                        <i class="fas fa-hamburger"></i>
+                        <span>{{user.favoriteRecipes.length}}</span>
+                    </h6>
+                </div>
 
 
-                </h6>
                 <hr>
                 <div class="links-container">
                     <a class="ui inverted primary button" routerLink="/community/profile/{{userID}}">View Profile
@@ -93,7 +108,7 @@
                         <div class="comments">
                             <div class="comments__show">
 
-                                <div class="comment__author" *ngFor="let comment of post.comments;let currentCommentIndex=index">
+                                <div class="comment__author" *ngFor="let comment of post.comments.slice(0, 3);;let currentCommentIndex=index">
                                     <img [src]="sanitizeImageUrl(comment.author.imageURL)" alt="">
 
                                     <div class="comment__author--info">
@@ -109,13 +124,9 @@
                                 </div>
 
                             </div>
-
-
-                            <!-- <div class="field">
-                            <label>Leave Your Comment</label>
-                            <input placeholder="Leave your comment" class="input" type="text">
-                            <p><i class="fas fa-arrow-right"></i></p>
-                        </div> -->
+                            <div class="more-comments" *ngIf="post.comments.length > 3" routerLink="/community/get-post/{{post._id}}">
+                                <p>Show more comments</p>
+                            </div>
                         </div>
 
 

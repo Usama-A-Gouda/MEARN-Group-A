@@ -29,3 +29,14 @@ td i:nth-of-type(3) {
 td i:hover {
     transform: scale(1.3);
 }
+
+mat-form-field {
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 2rem;
+}

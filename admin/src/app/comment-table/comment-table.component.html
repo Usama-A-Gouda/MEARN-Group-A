@@ -6,7 +6,13 @@
 <div class="main-content" *ngIf="isResponsDone">
     <div class="container-fluid">
         <div class="row">
+            <mat-form-field class="example-full-width offset-3 col-md-6">
+                <mat-label>Search</mat-label>
+                <input matInput placeholder="Search for message" (change)="search($event)">
+                <i class="material-icons search-icon ">search</i>
+            </mat-form-field>
             <div class="col-md-12">
+
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title ">Comments Table</h4>

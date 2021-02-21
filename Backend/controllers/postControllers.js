@@ -11,6 +11,7 @@ exports.getPosts = async (req, res, next) => {
       .populate({ path: "author", model: "User" })
       .populate({
         path: "comments",
+        options: { sort: { createdAt: -1 } },
         populate: {
           path: "author",
           model: "User",
@@ -103,6 +104,7 @@ exports.showPost = async (req, res, next) => {
       .populate({ path: "author", model: "User" })
       .populate({
         path: "comments",
+        options: { sort: { createdAt: -1 } },
         populate: {
           path: "author",
           model: "User",

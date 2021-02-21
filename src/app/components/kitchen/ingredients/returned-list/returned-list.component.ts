@@ -14,7 +14,7 @@ export class ReturnedListComponent implements OnInit {
   ingredients = null;
   ingredientDetails = [];
   searchParam;
-
+  isReadMoreClicked = null;
   constructor(
     private _apiServices: ApiService,
     private route: ActivatedRoute,
@@ -79,6 +79,7 @@ export class ReturnedListComponent implements OnInit {
             console.log(this.ingredientDetails[0][`nutrition`]);
           },
           (err) => {
+            this.spinner.show();
             console.log(err);
           }
         );

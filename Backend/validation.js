@@ -35,9 +35,18 @@ const createCommentValidation = (data) => {
 
   return schema.validate(data);
 };
+const contactUsValidation = (data) => {
+  const schema = Joi.object({
+    fullname: Joi.string().min(4).trim().max(255).required(),
+    email: Joi.string().trim().min(6).max(255).required().email(),
+    message: Joi.string().min(10).trim().max(255).required(),
+  });
+  return schema.validate(data);
+};
 module.exports = {
   registerValidation,
   loginValidation,
   createPostValidation,
   createCommentValidation,
+  contactUsValidation,
 };

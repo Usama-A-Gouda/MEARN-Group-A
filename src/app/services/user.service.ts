@@ -30,6 +30,7 @@ export class UserService {
     return localStorage.getItem('Token');
   }
   getUserID() {
+    console.log("from get user id :", localStorage.getItem('userID'));
     return localStorage.getItem('userID');
   }
   logout() {

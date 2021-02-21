@@ -17,6 +17,8 @@ export class SearchResultsComponent implements OnInit {
   userID = this._userService.getUserID();
   user: User;
   users = [];
+  posts = [];
+  comments = [];
   showFooter = false;
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +28,7 @@ export class SearchResultsComponent implements OnInit {
     private _flashMessagesService: FlashMessagesService,
     private _router: Router,
     private spinner: NgxSpinnerService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.spinner.show();
@@ -40,6 +42,9 @@ export class SearchResultsComponent implements OnInit {
             this.spinner.hide();
             console.log(response);
             this.users = response['Data'];
+            this.posts = response['foundPost'];
+            this.comments = response['foundComment'];
+
             this.showFooter = true;
           },
           (error) => {
@@ -82,6 +87,28 @@ export class SearchResultsComponent implements OnInit {
   }
   showUser(searchID) {
     this._router.navigate([`community/profile/${searchID}`]);
+  }
+  flaguser = true;
+  flagpost = true;
+  flagcomment = true;
+  filterSearch(filter) {
+    if (filter == 'users') {
+      this.flaguser = true;
+      this.flagpost = false;
+      this.flagcomment = false;
+    } else if (filter == 'posts') {
+      this.flagpost = true;
+      this.flaguser = false;
+      this.flagcomment = false;
+    } else if (filter == 'comments') {
+      this.flagcomment = true;
+      this.flaguser = false;
+      this.flagpost = false;
+    } else if (filter == 'all') {
+      this.flagpost = true;
+      this.flaguser = true;
+      this.flagcomment = true;
+    }
   }
   isDark;
   ngDoCheck() {

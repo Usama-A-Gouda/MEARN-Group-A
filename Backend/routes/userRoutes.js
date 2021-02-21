@@ -13,4 +13,11 @@ router.get(
 router.put("/edit-user/:userId", isAuth, userControllers.editUser);
 router.delete("/delete-user/:userId", isAuth, userControllers.deleteUser);
 router.get("/show", userControllers.getUsers);
+router.post("/feedback", userControllers.createFeedBack);
+router.get(
+  "/get-feedback-messages",
+  isAuth,
+  userControllers.getFeedbackMessages
+);
+router.delete("/feedback/:id", isAuth, userControllers.deleteFeedback);
 module.exports = router;

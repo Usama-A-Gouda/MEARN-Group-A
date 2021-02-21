@@ -20,7 +20,6 @@ export class RecipeDetailsComponent implements OnInit {
   moreRecipes: any;
   recipeID;
   isCreateClicked = false;
-  isSignIn: Boolean;
   userID = this._userService.getUserID();
   flag2 = true;
   flag3 = false;
@@ -31,6 +30,7 @@ export class RecipeDetailsComponent implements OnInit {
   user: User;
   userr = new User();
   showFooter = false;
+  isSignIn: Boolean = false;
   favoriteButtonFlag = false;
   shareToCommunityFlag = false;
   constructor(
@@ -112,17 +112,17 @@ export class RecipeDetailsComponent implements OnInit {
 
     this._communityService.LoginUser('user/login', this.userr).subscribe(
       (response) => {
+        this.isSignIn = true;
+        this.favoriteButtonFlag = false;
+        this.shareToCommunityFlag = false;
 
-        console.log(response['Data'].token);
-        console.log(response['Data'].userID);
         this._userService.login(
           response['Data'].token,
           response['Data'].userID
         );
+        this.userID = this._userService.getUserID();
 
-        this.isSignIn = true;
-        this.favoriteButtonFlag = false;
-        this.shareToCommunityFlag = false;
+
       },
       (error) => {
         console.log(error);
@@ -236,12 +236,12 @@ export class RecipeDetailsComponent implements OnInit {
   }
   btnClicked() {
     this.shareToCommunityFlag = true;
+
     // if (this.userID != null) {
+
     //   this.isSignIn = true;
-    //   console.log("shared is clicked!", this.isSignIn)
     // } else {
     //   this.isSignIn = false;
-    //   console.log("shared is clicked!", this.isSignIn)
     // }
   }
   stopSubmitting() {
@@ -264,7 +264,7 @@ export class RecipeDetailsComponent implements OnInit {
       }
     } else {
       this.isSignIn = false;
-      console.log('isclicked', this.isSignIn);
+      console.log(this.userID);
     }
   }
   isDark = false;
