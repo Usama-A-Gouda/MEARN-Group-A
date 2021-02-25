@@ -43,20 +43,23 @@
                             </div>
                             <div class="options">
                                 <div class="btn_wrap">
-                                    <span class="you-would">Add to favorite</span>
+                                    <span class="you-would">Save to Recipe Box</span>
                                     <div class="container">
 
-                                        <i class="fas fa-heart icon {{flagFav ? 'fav' : ''}}" (click)="btnClickedFav()"></i>
+                                        <i class="fas fa-bookmark icon {{flagFav ? 'fav' : ''}}"
+                                            (click)="btnClickedFav()"></i>
 
-                                        <i onkeypress="return false" (click)="btnClicked()" class="fas fa-share-alt icon"></i>
+                                        <i onkeypress="return false" (click)="btnClicked()"
+                                            class="fas fa-share-alt icon"></i>
                                     </div>
                                 </div>
                                 <div class="wrapper">
                                     <input type="checkbox" />
                                     <div class="btn"><i class="fas fa-info"></i></div>
                                     <div class="tooltip">
-                                        <span>Here you can add recipe to your favorite recipes , also you can share the
-                                            recipe in the community</span>
+                                        <p>Interested in the recipe? Save it</p>
+                                        <span>Keep all of your favorite recipes
+                                            in one place<br>You also can share the recipe in the community</span>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +70,19 @@
                             <div class="thumb">
                                 <img src="https://spoonacular.com/recipeImages/{{recipeDetails.id}}-636x393.jpg">
                             </div>
-
+                            <div class="wrapper-star">
+                                <p>{{lower}} ratings</p>
+                                <input name="ratingRadio" type="radio" id="st1" [class.checked]="rating >=5" />
+                                <label for="st1"></label>
+                                <input name="ratingRadio" type="radio" id="st2" [class.checked]="rating >=4" />
+                                <label for="st2"></label>
+                                <input name="ratingRadio" type="radio" id="st3" [class.checked]="rating >=3" />
+                                <label for="st3"></label>
+                                <input name="ratingRadio" type="radio" id="st4" [class.checked]="rating >=2" />
+                                <label for="st4"></label>
+                                <input name="ratingRadio" type="radio" id="st5" [class.checked]="rating >=1" />
+                                <label for="st5"></label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,7 +94,9 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="navbar navbar-expand-lg" id="tm-main-nav">
-                        <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbar-nav" aria-controls="navbar-nav" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
+                            data-target="#navbar-nav" aria-controls="navbar-nav" aria-expanded="false"
+                            aria-label="Toggle navigation">
                             <span class="dark-blue-text"><i class="fas fa-bars"></i></span>
                         </button>
                         <div class="collapse navbar-collapse tm-nav text-center" id="navbar-nav">
@@ -93,6 +110,9 @@
                                 </li>
                                 <li class="nav-item {{flag4? 'active' : ''}}" (click)="summActive()">
                                     <a class="nav-link tm-nav-link">Summary</a>
+                                </li>
+                                <li class="nav-item {{flag6? 'active' : ''}}" (click)="revActive()">
+                                    <a class="nav-link tm-nav-link">Reviews</a>
                                 </li>
                             </ul>
                         </div>
@@ -129,7 +149,8 @@
                                     </div>
 
                                     <div class="cd-timeline-content service-box-content mb-5">
-                                        <h6 style="text-transform: capitalize;" *ngFor="let ingredients of recipeDetails.extendedIngredients">
+                                        <h6 style="text-transform: capitalize;"
+                                            *ngFor="let ingredients of recipeDetails.extendedIngredients">
                                             <i class="fas fa-check"></i> {{ingredients.original}}
                                         </h6>
                                     </div>
@@ -163,7 +184,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <section id="cd-timeline" class="cd-container">
-                                <div class="cd-timeline-block mb-5" *ngFor="let steps of recipeDetails.analyzedInstructions[0].steps">
+                                <div class="cd-timeline-block mb-5"
+                                    *ngFor="let steps of recipeDetails.analyzedInstructions[0].steps">
                                     <div class="cd-timeline-img cd-picture">
                                         <img src="../../../../../assets/images/step.webp" alt="Picture">
                                     </div>
@@ -172,11 +194,15 @@
                                         <h6> <i class="fas fa-arrow-right"></i> STEP NUMBER : {{steps.number}}
                                         </h6>
                                         <h6 *ngIf="steps.equipment.length >0">
-                                            <i class="fas fa-utensils"></i> Equipment needed :<span style="text-transform: capitalize;" *ngFor="let equipments of steps.equipment;let currentIndex=index">
+                                            <i class="fas fa-utensils"></i> Equipment needed :<span
+                                                style="text-transform: capitalize;"
+                                                *ngFor="let equipments of steps.equipment;let currentIndex=index">
                                                 {{equipments.name}},</span>
                                         </h6>
                                         <h6 *ngIf="steps.ingredients.length >0">
-                                            <i class="fas fa-cookie-bite"></i> Ingredients needed :<span style="text-transform: capitalize;" *ngFor="let ingredients of steps.ingredients;let currentIndex=index">
+                                            <i class="fas fa-cookie-bite"></i> Ingredients needed :<span
+                                                style="text-transform: capitalize;"
+                                                *ngFor="let ingredients of steps.ingredients;let currentIndex=index">
                                                 {{ingredients.name}},</span><br>
                                         </h6>
                                         <h6><i class="fas fa-arrow-right"></i> {{steps.step}}</h6>
@@ -227,6 +253,99 @@
             </div>
         </div>
     </div>
+    <div *ngIf="flag6 == true">
+        <div id="details">
+            <div id="first-section">
+                <div class="heading">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="header-section-title">Review and rate this recipe</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="first-section1">
+                <div class="container">
+                    <div class="row">
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 review-container">
+                            <div class="row">
+                                <h3 class="note">Rate This Recipe</h3>
+                                <ng-container *ngIf="ratedRecipe==0;else other_content">
+                                    <div class="wrapper">
+                                        <input name="ratingRadio" type="radio" id="st6" value="5" #star1
+                                            [disabled]="flagdisable" (click)="sendRate($event);" />
+                                        <label for="st6"></label>
+                                        <input name="ratingRadio" type="radio" id="st7" value="4" #star2
+                                            [disabled]="flagdisable" (click)="sendRate($event);" />
+                                        <label for="st7"></label>
+                                        <input name="ratingRadio" type="radio" id="st8" value="3" #star3
+                                            [disabled]="flagdisable" (click)="sendRate($event);" />
+                                        <label for="st8"></label>
+                                        <input name="ratingRadio" type="radio" id="st9" value="2" #star4
+                                            [disabled]="flagdisable" (click)="sendRate($event);" />
+                                        <label for="st9"></label>
+                                        <input name="ratingRadio" type="radio" id="st0" value="1" #star5
+                                            [disabled]="flagdisable" (click)="sendRate($event);" />
+                                        <label for="st0"></label>
+                                    </div>
+                                </ng-container>
+                                <ng-template #other_content>
+                                    <div class="wrapper-star">
+                                        <input name="ratingRadio" type="radio" id="st5"
+                                            [class.checked]="ratedRecipe >=5" />
+                                        <label for="st6"></label>
+                                        <input name="ratingRadio" type="radio" id="st5"
+                                            [class.checked]="ratedRecipe >=4" />
+                                        <label for="st7"></label>
+                                        <input name="ratingRadio" type="radio" id="st5"
+                                            [class.checked]="ratedRecipe >=3" />
+                                        <label for="st8"></label>
+                                        <input name="ratingRadio" type="radio" id="st5"
+                                            [class.checked]="ratedRecipe >=2" />
+                                        <label for="st9"></label>
+                                        <input name="ratingRadio" type="radio" id="st5"
+                                            [class.checked]="ratedRecipe >=1" />
+                                        <label for="st0"></label>
+                                    </div>
+                                </ng-template>
+                            </div>
+                            <div class="ui comments">
+                                <h3 class="note ui dividing header">Cooking Notes</h3>
+                                <form class="ui reply form">
+                                    <div class="field">
+                                        <textarea #review></textarea>
+                                    </div>
+                                    <div class="ui grey labeled submit icon button"
+                                        (click)="addReview(review.value); review.value=''">
+                                        <i class="icon edit"></i> Add Your Review
+                                    </div>
+                                </form>
+                                <ng-container *ngIf="ratingRecipe">
+                                    <p class="ui dividing header">All reviews from cookers in the community</p>
+                                    <div class="comment" *ngFor="let review of ratingRecipe.comments">
+                                        <a class="avatar">
+                                            <img [src]="sanitizeImageUrl(review.user.imageURL)">
+                                        </a>
+                                        <div class="content">
+                                            <a class="author">{{review.user.username}}</a>
+                                            <div class="text">
+                                                {{review.review}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- <button class="button" > Create Post</button> -->
     <div class="popup {{  shareToCommunityFlag==true && isSignIn==true ? 'target' : '' }} " id="popup">
         <div style="background-color: black;" class="popup-inner">
@@ -241,7 +360,8 @@
                 </div>
                 <div class="field form-group">
                     <label class="pop-form-label">Your Post</label>
-                    <textarea #content class="form-control" rows="2" placeholder="Your Post " value="{{currentURL}}"></textarea>
+                    <textarea #content class="form-control" rows="2" placeholder="Your Post "
+                        value="{{currentURL}}"></textarea>
                 </div>
                 <button (click)="createPost(title.value , content.value)" class="ui black button">Submit</button>
             </form>
@@ -250,7 +370,8 @@
         </div>
     </div>
     <!-- <button class="button" > Create Post</button> -->
-    <div class="popup {{ (shareToCommunityFlag && !isSignIn) ||(favoriteButtonFlag && !isSignIn)  ? 'target' : '' }}" id="popup" class="main-container">
+    <div class="popup {{ (shareToCommunityFlag && !isSignIn) ||(favoriteButtonFlag && !isSignIn) || (rateButtonFlag&& !isSignIn) ? 'target' : '' }}"
+        id="popup" class="main-container">
         <div class="popup-inner">
             <div class=" {{ flag ? 'right-panel-active container' : 'container'}}" id="container">
                 <div class="form-container sign-up-container">
@@ -266,7 +387,8 @@
                         <input type="password" placeholder="Password" #passwordInput />
 
                         <input type="password" placeholder="Confirmed Password" #confirmedPasswordInput />
-                        <button (click)="singUp(usernameInput.value, emailInput.value, passwordInput.value, confirmedPasswordInput.value)">Sign
+                        <button
+                            (click)="singUp(usernameInput.value, emailInput.value, passwordInput.value, confirmedPasswordInput.value)">Sign
                             Up</button>
 
                     </form>
@@ -294,7 +416,8 @@
                         </div>
                     </div>
                 </div>
-                <a class="popup__close" (click)="shareToCommunityFlag=false;favoriteButtonFlag=false">X</a>
+                <a class="popup__close"
+                    (click)="shareToCommunityFlag=false;favoriteButtonFlag=false;rateButtonFlag=false;">X</a>
             </div>
         </div>
     </div>

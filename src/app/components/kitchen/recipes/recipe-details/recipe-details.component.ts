@@ -1,3 +1,5 @@
+import { Recipe } from './../../../../models/recipe';
+import { RatingService } from './../../../../services/rating.service';
 import { FavoritesService } from './../../../../services/favorites.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -7,7 +9,7 @@ import { Location } from '@angular/common';
 import { UserService } from 'src/app/services/user.service';
 import { CommunityService } from 'src/app/services/community.service';
 import { User } from 'src/app/models/user';
-import { MustMatch } from './MustMatch';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-recipe-details',
@@ -24,14 +26,23 @@ export class RecipeDetailsComponent implements OnInit {
   flag2 = true;
   flag3 = false;
   flag4 = false;
+  flag6 = false;
   flag5 = false;
   flagFav = false;
+  flagdisable = false;
+  rating;
+  ratingRecipe;
+  recipeRating = new Recipe();
+  up;
+  lower;
   currentURL = '';
   user: User;
   userr = new User();
   showFooter = false;
   isSignIn: Boolean = false;
   favoriteButtonFlag = false;
+  rateButtonFlag = false;
+  ratedRecipe = 0;
   shareToCommunityFlag = false;
   constructor(
     private _apiServices: ApiService,
@@ -40,7 +51,9 @@ export class RecipeDetailsComponent implements OnInit {
     private _location: Location,
     private _favoritesServices: FavoritesService,
     private _userService: UserService,
-    private _communityService: CommunityService
+    private _communityService: CommunityService,
+    private _ratingService: RatingService,
+    private sanitizer: DomSanitizer
   ) {
     this.currentURL = window.location.href;
   }
@@ -68,6 +81,32 @@ export class RecipeDetailsComponent implements OnInit {
             console.log(err);
           }
         );
+      this._ratingService
+        .getAndCreateRating(`rating/get-recipe-rating/${prodId}`)
+        .subscribe((response) => {
+          console.log(response);
+          this.ratingRecipe = response['Data'];
+          this.up =
+            5 * response['Data']['rating_5'] +
+            4 * response['Data']['rating_4'] +
+            3 * response['Data']['rating_3'] +
+            2 * response['Data']['rating_2'] +
+            1 * response['Data']['rating_1'];
+          this.lower =
+            response['Data']['rating_5'] +
+            response['Data']['rating_4'] +
+            response['Data']['rating_3'] +
+            response['Data']['rating_2'] +
+            response['Data']['rating_1'];
+          console.log(this.lower);
+          if (this.lower == 0 || this.up == 0) {
+            this.rating = 0;
+          } else {
+            this.rating = this.up / this.lower;
+            this.rating = Math.floor(this.rating);
+          }
+          console.log(this.rating);
+        });
     });
   }
 
@@ -78,12 +117,15 @@ export class RecipeDetailsComponent implements OnInit {
       console.log(this.slectedFile);
     }
   }
+  sanitizeImageUrl(imageUrl: string): SafeUrl {
+    if (imageUrl != '') {
+      return this.sanitizer.bypassSecurityTrustUrl(
+        `http://127.0.0.1:5000/${imageUrl}`
+      );
+    } else return '';
+  }
 
   singUp(username, email, password, confirmedPassword) {
-    // this.user.username = username;
-    // this.user.email = email;
-    // this.user.password = password;
-    // this.user.confirmedPassword = confirmedPassword;
     const formData = new FormData();
     if (this.slectedFile != null) {
       formData.append('image', this.slectedFile, this.slectedFile.name);
@@ -115,6 +157,7 @@ export class RecipeDetailsComponent implements OnInit {
         this.isSignIn = true;
         this.favoriteButtonFlag = false;
         this.shareToCommunityFlag = false;
+        this.rateButtonFlag = false;
 
         this._userService.login(
           response['Data'].token,
@@ -127,10 +170,6 @@ export class RecipeDetailsComponent implements OnInit {
       }
     );
   }
-  // close() {
-  //   const pop = document.querySelector('.main-container') as HTMLInputElement;
-  //   pop.classList.toggle('target');
-  // }
   flag = false;
   buttonClicked() {
     this.flag = !this.flag;
@@ -139,14 +178,23 @@ export class RecipeDetailsComponent implements OnInit {
     this.flag2 = true;
     this.flag3 = false;
     this.flag4 = false;
+    this.flag6 = false;
   }
   instActive() {
     this.flag3 = true;
     this.flag2 = false;
     this.flag4 = false;
+    this.flag6 = false;
   }
   summActive() {
     this.flag4 = true;
+    this.flag2 = false;
+    this.flag3 = false;
+    this.flag6 = false;
+  }
+  revActive() {
+    this.flag6 = true;
+    this.flag4 = false;
     this.flag2 = false;
     this.flag3 = false;
   }
@@ -161,7 +209,6 @@ export class RecipeDetailsComponent implements OnInit {
       .subscribe(
         (response) => {
           this.spinner.hide();
-          // console.log('This Posts from 86 :', this.postContent);
           this.favoriteRecipes = response['Data'];
           console.log(this.favoriteRecipes);
         },
@@ -179,7 +226,6 @@ export class RecipeDetailsComponent implements OnInit {
       .subscribe(
         (response) => {
           this.spinner.hide();
-          // console.log('This Posts from 86 :', this.postContent);
           this.favoriteRecipes = response['Data'];
           console.log(this.favoriteRecipes);
         },
@@ -194,31 +240,31 @@ export class RecipeDetailsComponent implements OnInit {
     this._communityService.getUser(`user/get-user/${userID}`).subscribe(
       (response) => {
         this.spinner.hide();
-        // console.log('This Posts from 86 :', this.postContent);
         this.user = response['Data'];
         this.isSignIn = true;
         console.log('user:', this.user);
-        // console.log('The fav', this.user.favoritePosts.includes(this.posts[0]));
         if (this.user.favoriteRecipes.includes(this.recipeID)) {
           this.flagFav = true;
         }
+        var found = false;
+        for (var i = 0; i < this.user['ratedRecipes'].length; i++) {
+          if (this.user['ratedRecipes'][i].recipe_id == this.recipeID) {
+            this.ratedRecipe = this.user['ratedRecipes'][i].rate;
+            console.log(this.ratedRecipe);
+          }
+        }
         console.log(this.flagFav);
       },
-      (error) => { }
+      (error) => {}
     );
   }
   createPost(title: string, content: string) {
-    // this.postContent.title = title;
-    // this.postContent.content = content;
-    // this.postContent.imageURL = imageURL;
     const image = `https://spoonacular.com/recipeImages/${this.recipeDetails.id}-636x393.jpg`;
     console.log(image);
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
     formData.append('imageURL', image);
-    // this.postContent.imageURL = formData;
-    // console.log(this.postContent.imageURL);
     this._communityService.createPost('post/create', formData).subscribe(
       (response) => {
         console.log('posts', response['Data']);
@@ -236,13 +282,6 @@ export class RecipeDetailsComponent implements OnInit {
   }
   btnClicked() {
     this.shareToCommunityFlag = true;
-
-    // if (this.userID != null) {
-
-    //   this.isSignIn = true;
-    // } else {
-    //   this.isSignIn = false;
-    // }
   }
   stopSubmitting() {
     return false;
@@ -266,6 +305,88 @@ export class RecipeDetailsComponent implements OnInit {
       this.isSignIn = false;
       console.log(this.userID);
     }
+  }
+  sendRate(event) {
+    this.rateButtonFlag = true;
+    if (this.userID) {
+      console.log(event.target.value);
+
+      let ratedRecipe;
+      if (event.target.value == 5) {
+        this.recipeRating.rating_5 = event.target.value;
+        ratedRecipe = {
+          recipe_id: this.recipeID,
+          rate: 5,
+        };
+      } else if (event.target.value == 4) {
+        this.recipeRating.rating_4 = event.target.value;
+        ratedRecipe = {
+          recipe_id: this.recipeID,
+          rate: 4,
+        };
+      } else if (event.target.value == 3) {
+        this.recipeRating.rating_3 = event.target.value;
+        ratedRecipe = {
+          recipe_id: this.recipeID,
+          rate: 3,
+        };
+      } else if (event.target.value == 2) {
+        this.recipeRating.rating_2 = event.target.value;
+        ratedRecipe = {
+          recipe_id: this.recipeID,
+          rate: 2,
+        };
+      } else if (event.target.value == 1) {
+        this.recipeRating.rating_1 = event.target.value;
+        ratedRecipe = {
+          recipe_id: this.recipeID,
+          rate: 1,
+        };
+      }
+      this.recipeRating.recipe_id = this.recipeID;
+      this._ratingService
+        .updateRating(
+          `rating/update-recipe-rating/${this.recipeID}`,
+          this.recipeRating
+        )
+        .subscribe(
+          (response) => {
+            console.log(response);
+            this.flagdisable = true;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      this._favoritesServices
+        .addRecipeToRated('favorites/add-rated-recipe', ratedRecipe)
+        .subscribe(
+          (response) => {
+            console.log(response);
+            event.preventDefault();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } else {
+      event.preventDefault();
+    }
+  }
+  addReview(review) {
+    this.rateButtonFlag = true;
+    console.log(review);
+    this._ratingService
+      .addReview(`rating/add-review/${this.recipeID}`, review)
+      .subscribe(
+        (response) => {
+          console.log(response);
+          this.ratingRecipe.comments.push(response['Data']);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
   isDark = false;
   ngDoCheck() {

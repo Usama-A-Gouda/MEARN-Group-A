@@ -173,9 +173,11 @@ exports.getUser = async (req, res, next) => {
     error.message = "No User With This ID";
     return next(error);
   }
+  const user = await User.findById(userId);
 
   res.status(200).json({
     Data: foundUser,
+    ModifedData: user,
     Message: `This User Is Found Succcefully`,
     Error: null,
     Success: true,
@@ -542,18 +544,20 @@ exports.blockUser = async (req, res, next) => {
       error.message = "Error , You Can't Delete This Post";
       return next(error);
     }
-    const user = await User.findByIdAndUpdate(req.params.userId, { isBlocked });
+
+    foundUser.isBlocked = isBlocked;
+    await foundUser.save();
     let message;
-    console.log("after edit :", user);
-    if (user.isBlocked == true) {
+    console.log("after edit :", foundUser);
+    if (foundUser.isBlocked == true) {
       message = "User Blocked Successfully";
-    } else {
+    } else if (foundUser.isBlocked == false) {
       message = "User Unblocked Successfully";
     }
 
     return res.status(200).json({
       Message: message,
-      Data: user,
+      Data: foundUser,
       Success: true,
       Error: null,
     });

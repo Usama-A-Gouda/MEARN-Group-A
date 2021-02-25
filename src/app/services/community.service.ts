@@ -116,4 +116,9 @@ export class CommunityService {
   createFeedBack(url, message) {
     return this._httpClient.post(`${environment.communityURL}/${url}`, message);
   }
+  likeOrUnlikePost(url, like) {
+    return this._httpClient.post(`${environment.communityURL}/${url}`, { like }, {
+      headers: { authorization: this._userService.getToken() },
+    });
+  }
 }

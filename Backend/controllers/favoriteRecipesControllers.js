@@ -29,6 +29,36 @@ exports.addRecipeToFavorite = async (req, res, next) => {
     return next(err);
   }
 };
+exports.addRecipeToRated = async (req, res, next) => {
+  try {
+    const { recipe_id, rate } = req.body;
+    console.log(req.body);
+    if (!recipe_id) {
+      const error = new Error();
+      error.statusCode = 422;
+      error.message = "No Recipe With This ID , Please Try With Another ID";
+      return next(error);
+    }
+    const user = await User.findById(req.userID);
+    console.log("user", user);
+    user.ratedRecipes.push(req.body);
+    console.log(user);
+
+    let currentUser = await user.save();
+    return res.status(200).json({
+      Message: "Added recipe to rated recipes",
+      Data: user.ratedRecipes,
+      Success: true,
+      Error: null,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    err.message = "Somthing Went Wrong !";
+    return next(err);
+  }
+};
 exports.removeFromFavorite = async (req, res, next) => {
   try {
     const foundPost = req.params.recipeID;

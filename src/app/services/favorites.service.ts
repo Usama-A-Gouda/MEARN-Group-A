@@ -21,6 +21,16 @@ export class FavoritesService {
       }
     );
   }
+  addRecipeToRated(url: string, ratedRecipe) {
+    console.log(url);
+    return this._httpClient.post(
+      `${environment.communityURL}/${url}`,
+      ratedRecipe,
+      {
+        headers: { authorization: this._userService.getToken() },
+      }
+    );
+  }
   removeFromFavorite(url: string) {
     console.log(url);
     return this._httpClient.put(

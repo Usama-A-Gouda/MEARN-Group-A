@@ -9,8 +9,8 @@ declare const window: any;
 })
 export class HeaderComponent implements OnInit {
   isScrolled = false;
-  isLogged: boolean = false;
-  userID = this._userService.getUserID();
+  isLogged: boolean;
+  userID;
   user;
 
   constructor(
@@ -19,14 +19,7 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLogged = this._userService.isLogged();
-    this._userService.getLoggedStatus().subscribe((status) => {
-      this.isLogged = status;
-      console.log(this.isLogged);
-    });
-    if (this.userID != null) {
-      this.getUser();
-    }
+    // this.isLogged = this._userService.isLogged();
   }
   navScroll(event) {
     console.log(event);
@@ -58,7 +51,16 @@ export class HeaderComponent implements OnInit {
     menu.classList.toggle('active');
     nav.classList.toggle('drop');
   }
-
+  ngAfterContentChecked() {
+    if (localStorage.getItem('Token')) {
+      this.isLogged = true;
+      if (!this.user) {
+        this.getUser();
+      }
+    } else {
+      this.isLogged = false;
+    }
+  }
   ngDoCheck() {
     const cb = document.querySelector('.checkbox-input') as HTMLInputElement;
     if (localStorage.getItem('Theme') == 'Dark') {
@@ -66,18 +68,27 @@ export class HeaderComponent implements OnInit {
     } else {
       cb.checked = false;
     }
-  }
 
+    /* 
+    subscribe((status) => {
+      this.isLogged = status;
+      console.log("logged?", this.isLogged);
+    })
+*/
+  }
+  isDark = false;
   setTheme(isChecked) {
     if (isChecked) {
       localStorage.setItem('Theme', 'Dark');
+      this.isDark = true;
     } else {
       localStorage.setItem('Theme', 'Light');
+      this.isDark = false;
     }
   }
   getUser() {
     console.log(this.userID);
-    let userId = this.userID;
+    let userId = this._userService.getUserID();
     this._communityService.getUser(`user/get-user/${userId}`).subscribe(
       (response) => {
         // console.log('This Posts from 86 :', this.postContent);

@@ -53,7 +53,7 @@
                                     </th>
                                 </thead>
                                 <tbody class="text-black" *ngFor="let user of users;let currentIndex = index">
-                                    <tr>
+                                    <tr class="{{ user.isBlocked==true ? 'block-theme' : '' }} ">
                                         <td>
                                             {{currentIndex+1}}
                                         </td>
@@ -75,7 +75,13 @@
                                         <td>{{ stringAsDate(user.createdAt) | date:'dd/MM/yy' }}
                                         </td>
                                         <td>
-                                            <input type="checkbox" class="example-margin" (change)="blockUser(user._id,currentIndex)">
+                                            <!-- <input type="checkbox" class="example-margin" (change)="blockUser(user._id,currentIndex,$event.target.checked)"> -->
+                                            <ng-container *ngIf="!user.isBlocked">
+                                                <i class="material-icons block " (click)="blockUser(true,user._id,currentIndex)">lock</i>
+                                            </ng-container>
+                                            <ng-container *ngIf="user.isBlocked">
+                                                <i (click)="blockUser(false,user._id,currentIndex)" class="material-icons block ">lock_open</i>
+                                            </ng-container>
 
 
                                         </td>

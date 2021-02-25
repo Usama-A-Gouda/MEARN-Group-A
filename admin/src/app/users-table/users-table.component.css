@@ -42,9 +42,20 @@ mat-form-field {
 }
 
 .block-theme {
-    background-color: #ec4646;
+    transition: all 0.4s;
+    background-color: #c75643;
+    color: white;
 }
 
 .block-theme:hover {
-    background-color: #ec4646 !important;
+    background-color: #c75643 !important;
+    color: white;
+}
+
+.block {
+    color: #0f0f0f !important;
+}
+
+.block:hover {
+    transform: none !important;
 }

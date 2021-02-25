@@ -26,7 +26,21 @@ const PostSchema = mongoose.Schema(
         ref: "Comment",
       },
     ],
+    likes: {
+      users: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      ],
+
+      like: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
+
   {
     timestamps: true,
   }

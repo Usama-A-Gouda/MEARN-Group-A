@@ -56,15 +56,18 @@ exports.createPost = async (req, res, next) => {
 
     //   throw error;
     // }
-    if (!imageURL.includes("https")) {
-      let image;
-      if (req.file) {
-        image = req.file.path;
+    let image;
+    if (imageURL) {
+      if (!imageURL.includes("https")) {
+        if (req.file) {
+          image = req.file.path;
+        }
+      } else {
+        console.log("Contains HTTPS");
+        image = imageURL;
       }
-    } else {
-      console.log("Contains HTTPS");
-      image = imageURL;
     }
+
     // console.log(imageURL);
     // console.log(req.file.filename, "file");
     const post = new Post({
@@ -241,12 +244,19 @@ exports.addToFavorite = async (req, res, next) => {
       return next(error);
     }
     const user = await User.findById(req.userID);
-    user.favoritePosts.push(foundPost);
-
+    // user.favoritePosts.push(foundPost);
+    let userPosts = await User.findByIdAndUpdate(
+      req.userID,
+      {
+        $push: { favoritePosts: req.params.postId },
+      },
+      { new: true }
+    );
+    await userPosts.save();
     let currentUser = await user.save();
     return res.status(200).json({
       Message: "Added post to favorites",
-      Data: user.favoritePosts,
+      Data: userPosts.favoritePosts,
       Success: true,
       Error: null,
     });
@@ -269,9 +279,13 @@ exports.removeFromFavorite = async (req, res, next) => {
       return next(error);
     }
     const user = await User.findById(req.userID);
-    let userPosts = await User.findByIdAndUpdate(req.userID, {
-      $pull: { favoritePosts: req.params.postId },
-    });
+    let userPosts = await User.findByIdAndUpdate(
+      req.userID,
+      {
+        $pull: { favoritePosts: req.params.postId },
+      },
+      { new: true }
+    );
     return res.status(200).json({
       Message: "Removed post from favorites",
       Data: userPosts.favoritePosts,
@@ -283,6 +297,99 @@ exports.removeFromFavorite = async (req, res, next) => {
       err.statusCode = 500;
     }
     err.message = "Somthing Went Wrong !";
+    return next(err);
+  }
+};
+// Add or remove like
+exports.addOrRemoveLike = async (req, res, next) => {
+  const { like } = req.body;
+  console.log(req.body);
+  try {
+    if (!req.body) {
+      const error = new Error("Somthing went wrong ! no data provided!!");
+      error.statusCode = 422;
+      throw error;
+    }
+    const foundPost = await Post.findById(req.params.postId).populate({
+      path: "likes",
+      populate: {
+        path: "users",
+        model: "User",
+      },
+    });
+    const foundUser = await User.findById(req.userID);
+    // const admin = await Admin.findById("6027109bb911cc1e1c5d0540");
+    if (!foundPost || !foundUser) {
+      const error = new Error("Can't find user or post , please try again!");
+      error.statusCode = 404;
+      throw error;
+    }
+    // if (foundPost.likes.author.toString() != req.userID.toString() && !admin) {
+    //   const error = new Error();
+    //   error.statusCode = 403;
+    //   error.message = "Error , You Can't Edit This Like";
+    //   next(error);
+    // }
+    // let data = {
+    //   author: req.userID,
+    //   like: like,
+    // };
+
+    // const post = await Post.findByIdAndUpdate(req.params.postId, {
+    //   $push: { likes: data },
+    // });
+    let user;
+    let message;
+    // await foundPost.save();
+    if (like == false) {
+      message = "Like removed successfully";
+      user = await User.findByIdAndUpdate(
+        req.userID,
+        {
+          $pull: { likedPosts: req.params.postId },
+        },
+        { new: true }
+      );
+      await user.save();
+      foundPost.likes.users = foundPost.likes.users.filter((user) => {
+        return user != req.userID;
+      });
+      if (foundPost.likes.like == 0) {
+        foundPost.likes.like = 0;
+      } else {
+        foundPost.likes.like -= 1;
+      }
+      await foundPost.save();
+    } else {
+      foundPost.likes.users.push(req.userID);
+      foundPost.likes.like += 1;
+      message = "Like added successfully";
+      // user = new User();
+      user = await User.findByIdAndUpdate(
+        req.userID,
+        {
+          $push: { likedPosts: req.params.postId },
+        },
+        { new: true }
+      );
+    }
+
+    await foundPost.save();
+    console.log("post with like , :", foundPost);
+    console.log("user with like , :", user);
+    // const postAfterUpdate = await Post.findById(req.params.postId);
+
+    return res.status(200).json({
+      Message: message,
+      Data: { foundPost, user },
+      Success: true,
+      Error: null,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+
     return next(err);
   }
 };

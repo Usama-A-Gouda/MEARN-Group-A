@@ -38,7 +38,7 @@ export class ContactTableComponent implements OnInit {
         .subscribe(response => {
           console.log(response);
           this.contacts.splice(index, 1)
-          this.beforSearch.splice(index, 1);
+          // this.beforSearch.splice(index, 1);
         }, error => {
           console.log(error)
         }

@@ -37,6 +37,12 @@ const UserSchema = mongoose.Schema(
         type: String,
       },
     ],
+    ratedRecipes: [
+      {
+        recipe_id: { type: String, required: true },
+        rate: { type: Number, requied: true },
+      },
+    ],
     isBlocked: {
       type: Boolean,
       default: false,
@@ -45,6 +51,12 @@ const UserSchema = mongoose.Schema(
       type: String,
       default: "https://www.bootdey.com/img/Content/avatar/avatar7.png",
     },
+    likedPosts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
   },
   {
     timestamps: true,

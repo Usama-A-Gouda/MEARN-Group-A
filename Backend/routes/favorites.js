@@ -11,4 +11,9 @@ router.put(
   isAuth,
   favoriteRecipesControllers.removeFromFavorite
 );
+router.post(
+  "/add-rated-recipe",
+  isAuth,
+  favoriteRecipesControllers.addRecipeToRated
+);
 module.exports = router;

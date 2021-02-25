@@ -10,7 +10,7 @@
             </div>
         </div>
     </ngx-spinner>
-    <div class="show-posts__container">
+    <div class="show-posts__container row">
         <div class="user" *ngIf="user">
             <div class="user__image">
                 <img [src]="sanitizeImageUrl(user.imageURL)" alt="">
@@ -38,7 +38,7 @@
             </div>
 
         </div>
-        <div class="posts">
+        <div class="posts col-md-5">
             <flash-messages></flash-messages>
             <ng-container *ngIf="user">
 
@@ -49,14 +49,14 @@
 
                         <div class="author__area">
 
-                            <div class="author__info">
+                            <div class="author__info mt-3">
                                 <h3>{{user.username}}</h3>
                                 <h6>{{ stringAsDate(post.createdAt) | date:'dd/MM/yy' }}</h6>
                                 <h6>{{ stringAsDate(post.createdAt) | date:'HH:mm' }}</h6>
 
                             </div>
                             <div
-                                class="post__action {{changeValueToCurrentIndex == currentIndex ? 'move-to-left' : ''}}">
+                                class="post__action mt-3 {{changeValueToCurrentIndex == currentIndex ? 'move-to-left' : ''}}">
 
                                 <i class="{{changeValueToCurrentIndex == currentIndex ? 'fas fa-angle-right' : 'fas fa-angle-left'}}"
                                     (click)="setCurrentIndexValue(currentIndex)"></i>

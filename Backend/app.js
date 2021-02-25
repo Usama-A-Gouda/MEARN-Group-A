@@ -8,6 +8,7 @@ const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const commentRoutes = require("./routes/commentRoutes");
+const ratingRoutes = require("./routes/rating");
 const path = require("path");
 // const app = express();
 const apiPort = 5000;
@@ -47,6 +48,7 @@ app.use("/user", userRoutes);
 app.use("/post", postRoutes, commentRoutes);
 app.use("/admin", adminRoutes);
 app.use("/favorites", favoriteRecipesRoutes);
+app.use("/rating", ratingRoutes);
 // app.get("/test", (req, res) => {
 //   let verifier = new Verifier(
 //     "at_0a3RjC2seFWDB91YL1bGtpyLE0E0F",

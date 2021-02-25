@@ -11,4 +11,5 @@ export class User {
   favoritePosts: [PostContent];
   favoriteRecipes: [String];
   isBlocked: boolean;
+  likedPosts: [object];
 }

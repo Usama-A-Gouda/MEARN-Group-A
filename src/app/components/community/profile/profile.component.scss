@@ -247,12 +247,7 @@
       & > hr {
         width: 100%;
         margin-bottom: 1rem;
-        background-image: linear-gradient(
-          to right,
-          rgba(0, 0, 0, 0),
-          rgba(216, 43, 0, 0.75),
-          rgba(0, 0, 0, 0)
-        );
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(216, 43, 0, 0.75), rgba(0, 0, 0, 0));
       }
       .author {
         display: flex;
@@ -469,12 +464,7 @@ hr {
   border: 0;
   height: 2px;
   width: 20vw;
-  background-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.75),
-    rgba(0, 0, 0, 0)
-  );
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600&subset=latin-ext");
@@ -608,12 +598,7 @@ body {
   justify-content: space-evenly !important;
 }
 .dark {
-  background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.5)
-    ),
-    url() !important;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url() !important;
   .search__container {
     input {
       background-color: rgb(99, 99, 99);
@@ -641,6 +626,47 @@ body {
     textarea {
       background-color: rgb(99, 99, 99);
       color: white;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .show-posts__container {
+    width: 700px;
+    .user {
+      width: 100%;
+      margin-top: 30px;
+    }
+    .posts {
+      width: 90%;
+      margin-left: 50px;
+    }
+  }
+  .posts__show {
+    width: 100%;
+    font-size: 12px;
+    .add-comment {
+      img {
+        width: 20%;
+      }
+      textarea {
+        width: 60%;
+      }
+      i {
+        margin-right: 20px;
+      }
+    }
+  }
+}
+@media (max-width: 490px) {
+  .show-posts__container {
+    width: 500px;
+    .user {
+      width: 100%;
+    }
+    .posts {
+      width: 90%;
+      margin-left: 10px;
     }
   }
 }

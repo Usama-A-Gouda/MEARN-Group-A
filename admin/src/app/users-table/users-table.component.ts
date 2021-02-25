@@ -36,7 +36,6 @@ export class UsersTableComponent implements OnInit {
       this._communityService.delete(`user/delete-user/${userID}`)
         .subscribe(response => {
           console.log(response);
-
           this.users.splice(index, 1)
           this.beforSearch = this.users;
         }, error => {
@@ -63,45 +62,73 @@ export class UsersTableComponent implements OnInit {
 
 
   }
-  ngAfterViewInit() {
-    this.users.filter((user, index) => {
-      if (user.isBlocked == true) {
-        var cb = document.querySelectorAll('.example-margin')[index] as HTMLInputElement;
-        cb.checked = true;
-        console.log(cb);
-      }
+  // ngDoCheck() {
+  //   this.users.filter((user, index) => {
+
+  //     var cb = document.querySelectorAll('.example-margin')[index] as HTMLInputElement;
+  //     if (cb) {
+  //       if (user.isBlocked == true) {
+  //         cb.checked = true;
+  //         console.log(cb);
+  //       }
+  //       else if (user.isBlocked == false) {
+  //         cb.checked = false;
+  //       }
+  //     }
+
+  //   })
+  // }
+
+  // ngAfterContentInit() {
+  //   this.users.filter((user, index) => {
+
+  //     var cb = document.querySelectorAll('.example-margin')[index] as HTMLInputElement;
+  //     if (cb) {
+  //       if (user.isBlocked == true) {
+  //         cb.checked = true;
+  //         console.log(cb);
+  //       }
+  //       else if (user.isBlocked == false) {
+  //         cb.checked = false;
+  //       }
+  //     }
+
+  //   })
+  // }
+  // blockUser(userID, index, isBlocked) {
+
+  // if (this.blockedUserIndex != index) {
+  //   this.blockedUserIndex = index;
+  // }
+  // else {
+  //   this.blockedUserIndex = null;
+  // }
+  // document.querySelectorAll('tr')[index].classList.toggle('block-theme');
+  // this.isBlocked = !this.isBlocked;
+  //   console.log(isBlocked)
+  //   this._communityService.editUser('user/block-user', userID, { isBlocked }).subscribe(
+  //     response => {
+  //       console.log(response);
 
 
+  //     },
+  //     error => {
+  //       console.log(error);
+  //     }
+  //   )
 
-    })
-  }
-  ngDoCheck() {
-
-
-
-  }
-
-  blockUser(userID, index) {
-
-    // if (this.blockedUserIndex != index) {
-    //   this.blockedUserIndex = index;
-    // }
-    // else {
-    //   this.blockedUserIndex = null;
-    // }
-    document.querySelectorAll('tr')[index].classList.toggle('block-theme');
-    this.isBlocked = !this.isBlocked;
-    this._communityService.editUser('user/block-user', userID, { isBlocked: this.isBlocked }).subscribe(
+  // }
+  blockUser(value, userID, userIndex) {
+    this._communityService.editUser('user/block-user', userID, { isBlocked: value }).subscribe(
       response => {
-
-
+        this.users[userIndex] = response['Data'];
+        console.log(response);
       },
       error => {
         console.log(error);
       }
     )
-    console.log("ID", userID);
-    console.log("blocked?", this.isBlocked);
+
   }
 
 }

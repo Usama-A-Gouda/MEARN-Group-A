@@ -30,6 +30,7 @@ export class ShowPostsComponent implements OnInit {
   links;
   text = '';
   showFooter = false;
+  isUserLikedPost;
   constructor(
     private _communityService: CommunityService,
     private _userService: UserService,
@@ -39,7 +40,7 @@ export class ShowPostsComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private http: HttpClient
-  ) {}
+  ) { }
   sanitizeImageUrl(imageUrl: string): SafeUrl {
     if (imageUrl != '') {
       return this.sanitizer.bypassSecurityTrustUrl(
@@ -58,9 +59,8 @@ export class ShowPostsComponent implements OnInit {
     this._communityService.getAllPosts('post/show').subscribe(
       (response) => {
         this.spinner.hide();
-        console.log(response);
+
         this.posts = response['Data'];
-        console.log(this.posts);
 
         console.log('After habding', this.posts);
       },
@@ -213,7 +213,6 @@ export class ShowPostsComponent implements OnInit {
                 return (this.posts[index]['comments'][i] = response['Data']);
               }
             });
-            console.log(response);
 
             let successMessage = response['Message'];
             this._flashMessagesService.show(successMessage, {
@@ -238,6 +237,7 @@ export class ShowPostsComponent implements OnInit {
 
           console.log('from 71', response);
           this.posts[index]['comments'].push(response['Data']);
+          this.user.comments.push(response['Data']);
           // this.posts[index]["comments"][this.commentIndex].author =  ;
           let successMessage = response['Message'];
           this._flashMessagesService.show(successMessage, {
@@ -338,6 +338,7 @@ export class ShowPostsComponent implements OnInit {
     // create here
     alert('Welcome from add !');
   }
+  testUser;
   getUser() {
     this.spinner.show();
     console.log(this.userID);
@@ -346,19 +347,16 @@ export class ShowPostsComponent implements OnInit {
       (response) => {
         // console.log('This Posts from 86 :', this.postContent);
         this.user = response['Data'];
+
+        this.testUser = response['ModifedData'];
+        // this.checkFavAndLikes();
+
         this.spinner.hide();
         this.showFooter = true;
         console.log('user:', this.user);
         // console.log('The fav', this.user.favoritePosts.includes(this.posts[0]));
-        this.user.favoritePosts.filter((favPost) => {
-          this.posts.filter((post, i) => {
-            if (favPost['_id'].toString() == post['_id'].toString()) {
-              this.posts[i]['isFav'] = true;
-            } else {
-              this.posts[i]['isFav'] = false;
-            }
-          });
-        });
+
+
       },
       (error) => {
         let errorMessage = error['error'].Error;
@@ -369,6 +367,30 @@ export class ShowPostsComponent implements OnInit {
       }
     );
   }
+  // checkFavAndLikes() {
+  //   // this.user.favoritePosts.filter((favPost) => {
+  //   //   this.posts.filter((post, i) => {
+  //   //     if (favPost['_id'].toString() == post['_id'].toString()) {
+  //   //       this.posts[i]['isFav'] = true;
+  //   //     } else {
+  //   //       this.posts[i]['isFav'] = false;
+  //   //     }
+  //   //   });
+  //   // });
+
+
+  //   // this.user.likedPosts.filter((likedPost) => {
+  //   //   this.posts.filter((post, i) => {
+  //   //     if (likedPost.toString() == post['_id'].toString()) {
+  //   //       console.log("from liked posts", likedPost.toString())
+  //   //       this.posts[i]['isLiked'] = true;
+  //   //     } else {
+  //   //       this.posts[i]['isLiked'] = false;
+  //   //     }
+  //   //   })
+  //   // });
+  //   console.log("388", this.posts)
+  // }
   stringAsDate(dateStr: string) {
     return new Date(dateStr);
   }
@@ -387,6 +409,7 @@ export class ShowPostsComponent implements OnInit {
           this.spinner.hide();
           // console.log('This Posts from 86 :', this.postContent);
           this.favoritePosts = response['Data'];
+          this.testUser.favoritePosts = response['Data'];
           console.log(this.favoritePosts);
         },
         (error) => {
@@ -407,6 +430,7 @@ export class ShowPostsComponent implements OnInit {
           this.spinner.hide();
           // console.log('This Posts from 86 :', this.postContent);
           this.favoritePosts = response['Data'];
+          this.testUser.favoritePosts = response['Data'];
           console.log(this.favoritePosts);
         },
         (error) => {
@@ -423,13 +447,38 @@ export class ShowPostsComponent implements OnInit {
   }
   ngDoCheck() {
     let theme = localStorage.getItem('Theme');
-    console.log(theme);
-    console.log(this.isDark);
     if (theme == 'Dark') {
       this.isDark = true;
-      console.log(this.isDark);
     } else {
       this.isDark = false;
+    }
+  }
+
+  // ngAfterContentChecked() {
+
+  // }
+  likeOrUnlikePost(postID, index) {
+    console.log("include?", this.user.likedPosts.includes(postID));
+    if (this.user.likedPosts.includes(postID) == true) {
+      this.isUserLikedPost = false;
+    }
+    else {
+      this.isUserLikedPost = true;
+    }
+    // let like = this.posts[index]['likes'];
+    console.log("like,", this.isUserLikedPost)
+    this.spinner.show()
+    this._communityService.likeOrUnlikePost(`post/like/${postID}`, this.isUserLikedPost).subscribe(response => {
+      this.spinner.hide()
+      console.log(this.posts[index]['likes']);
+      this.posts[index]['likes'] = response['Data']['foundPost'].likes;
+      console.log("likedPosts:", response['Data']['user'].likedPosts);
+      this.user.likedPosts = response['Data']['user'].likedPosts;
+      // this.isUserLikedPost = !this.isUserLikedPost;
+      // this.user = response['Data']['user'];
+      console.log(response);
+    }), error => {
+      console.log(error)
     }
   }
 }

@@ -9,8 +9,8 @@
     </div>
 </ngx-spinner>
 <div class="main-container pt-5 {{ isDark ? 'dark' : '' }}" *ngIf="user">
-    <div class="show-posts__container">
-        <div class="user">
+    <div class="show-posts__container row">
+        <div class="user ">
             <div class="user__image">
                 <img [src]="sanitizeImageUrl(user.imageURL)" alt="">
             </div>
@@ -37,25 +37,25 @@
             </div>
 
         </div>
-        <div class="posts">
+        <div class="posts col-md-5">
             <flash-messages></flash-messages>
-            <div class="radi-group-container">
-                <div class="inputGroup">
+            <div class="radi-group-container row">
+                <div class="inputGroup col-md-3">
                     <input id="radio4" name="radio" type="radio" value="all"
                         (change)="filterSearch($event.target.value)" />
                     <label for="radio4">All</label>
                 </div>
-                <div class="inputGroup">
+                <div class="inputGroup col-md-3">
                     <input id="radio1" name="radio" type="radio" value="users"
                         (change)="filterSearch($event.target.value)" />
                     <label for="radio1">Users</label>
                 </div>
-                <div class="inputGroup">
+                <div class="inputGroup col-md-3">
                     <input id="radio2" name="radio" type="radio" value="posts"
                         (change)="filterSearch($event.target.value)" />
                     <label for="radio2">Posts</label>
                 </div>
-                <div class="inputGroup">
+                <div class="inputGroup col-md-3">
                     <input id="radio3" name="radio" type="radio" value="comments"
                         (change)="filterSearch($event.target.value)" />
                     <label for="radio3">Comments</label>
