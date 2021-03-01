@@ -40,10 +40,10 @@ export class GetPostComponent implements OnInit {
   userID = this._userService.getUserID();
   user;
   postID;
+  error = null;
   showFooter = false;
   ngOnInit(): void {
     this.spinner.show();
-    console.log('Habibaaaaa:', this.postContent);
     this.route.params.subscribe((params: Params) => {
       this.postID = params['id'];
       console.log(this.postID);
@@ -52,21 +52,27 @@ export class GetPostComponent implements OnInit {
         .subscribe(
           (response) => {
             this.spinner.hide();
-            console.log(response);
+            console.log("post", response);
             this.postContent = response['Data'];
             this.showFooter = true;
-            let successMessage = response['Message'];
+            let successMessage = response['Error'];
 
             this._flashMessagesService.show(successMessage, {
               cssClass: 'alert alert-success',
               timeout: 2000,
             });
           },
+
           (error) => {
+            this.spinner.hide();
+            this.postContent = error['error'].Data;
+            console.log("error", error)
+            this._router.navigate(['/community']);
+
             let errorMessage = error['error'].Error;
             this._flashMessagesService.show(errorMessage, {
-              cssClass: 'alert alert-danger',
-              timeout: 2000,
+              cssClass: 'alert alert-danger mt-9',
+              timeout: 4000,
             });
           }
         );
@@ -80,7 +86,14 @@ export class GetPostComponent implements OnInit {
       this.slectedFile = <File>event.target.files[0];
     }
   }
-
+  changeValueToCurrentIndex = null;
+  setCurrentIndexValue(index) {
+    if (this.changeValueToCurrentIndex != index) {
+      this.changeValueToCurrentIndex = index;
+    } else {
+      this.changeValueToCurrentIndex = null;
+    }
+  }
   createForm() {
     this.form = this._formBuilder.group({
       Title: [
@@ -102,12 +115,38 @@ export class GetPostComponent implements OnInit {
     });
   }
 
-  deletePost(postID) {
-    this._communityService
-      .deletePost('post/delete', postID)
-      .subscribe((response) => {
-        alert(response['Message']);
-      });
+  deletePost(postID, index) {
+    if (confirm('Are you sure to delete ')) {
+      this.spinner.show();
+      this._communityService.deletePost('post/delete', postID).subscribe(
+        (response) => {
+          this.spinner.hide();
+
+          this.user.posts.filter((post, i) => {
+            if (postID == post['_id']) {
+              this.user.posts.splice(i, 1);
+            }
+          });
+          this._router.navigate(['/community']);
+          let successMessage = response['Message'];
+          this._flashMessagesService.show(successMessage, {
+            cssClass: 'alert alert-success',
+            timeout: 2000,
+          });
+        },
+        (error) => {
+          let errorMessage = error['error'].Error;
+          this._flashMessagesService.show(errorMessage, {
+            cssClass: 'alert alert-danger',
+            timeout: 2000,
+          });
+        }
+      );
+    }
+    else {
+      this.spinner.hide();
+
+    }
   }
   editPost(title, content) {
     this.spinner.show();
@@ -134,11 +173,11 @@ export class GetPostComponent implements OnInit {
         }
       );
   }
-  addComment(comment, index) {
+  addComment(comment, postID, index) {
+    this.spinner.show();
     if (this.isEditComment == true) {
-      this.spinner.show();
       return this._communityService
-        .editComment(`post/${this.postID}/edit-comment/${this.commentid}`, {
+        .editComment(`post/${postID}/edit-comment/${this.commentid}`, {
           comment,
         })
         .subscribe(
@@ -167,17 +206,19 @@ export class GetPostComponent implements OnInit {
               cssClass: 'alert alert-danger',
               timeout: 2000,
             });
-            this._router.navigate(['/community/show-posts']);
           }
         );
     }
     this._communityService
-      .createComment(`post/${this.postID}/create-comment`, { comment })
+      .createComment(`post/${postID}/create-comment`, { comment })
       .subscribe(
         (response) => {
-          this.spinner.hide();
+          this.spinner.hide()
           console.log('from 71', response);
-          this.comments.push(response['Data']);
+
+          this.postContent['comments'].push(response['Data']);
+          this.user.comments.push(response['Data']);
+          this.spinner.hide();
           // this.posts[index]["comments"][this.commentIndex].author =  ;
           let successMessage = response['Message'];
           this._flashMessagesService.show(successMessage, {
@@ -191,38 +232,46 @@ export class GetPostComponent implements OnInit {
             cssClass: 'alert alert-danger',
             timeout: 2000,
           });
-          this._router.navigate(['/community/show-posts']);
         }
       );
   }
   commentIndex;
-  deleteComment(postID, commentID, currentPosttIndex, currentCommentIndex) {
-    this.spinner.show();
-    this.commentIndex = currentCommentIndex;
-    this._communityService
-      .deleteComment(`post/${postID}/delete-comment/${commentID}`)
-      .subscribe(
-        (response) => {
-          this.spinner.hide();
-          console.log('This Posts from 86 :', this.postContent);
-          console.log(response);
-          this.postContent['comments'].splice(currentCommentIndex, 1);
+  deleteComment(postID, commentID, currentCommentIndex) {
+    if (confirm('Are you sure to delete ')) {
+      this.spinner.show();
 
-          let successMessage = response['Message'];
-          this._flashMessagesService.show(successMessage, {
-            cssClass: 'alert alert-success',
-            timeout: 2000,
-          });
-        },
-        (error) => {
-          let errorMessage = error['error'].Error;
-          this._flashMessagesService.show(errorMessage, {
-            cssClass: 'alert alert-danger',
-            timeout: 2000,
-          });
-          this._router.navigate(['/community/show-posts']);
-        }
-      );
+      this.commentIndex = currentCommentIndex;
+      this._communityService
+        .deleteComment(`post/${postID}/delete-comment/${commentID}`)
+        .subscribe(
+          (response) => {
+            this.spinner.hide();
+            this.postContent['comments'].splice(currentCommentIndex, 1);
+            for (let [index, comment] of this.user.comments.entries()) {
+              if (comment['_id'] == commentID)
+                this.user.comments.splice(index, 1);
+            }
+
+            let successMessage = response['Message'];
+            this._flashMessagesService.show(successMessage, {
+              cssClass: 'alert alert-success',
+              timeout: 2000,
+            });
+          },
+          (error) => {
+            let errorMessage = error['error'].Error;
+            this._flashMessagesService.show(errorMessage, {
+              cssClass: 'alert alert-danger',
+              timeout: 2000,
+            });
+          }
+        );
+    }
+    else {
+      this.spinner.hide();
+
+    }
+
   }
   commentid = '';
   commentValue = '';
@@ -230,6 +279,32 @@ export class GetPostComponent implements OnInit {
     this.isEditComment = true;
     this.commentValue = value.comment;
     this.commentid = value._id;
+  }
+  editButtonClicked(postID, index) {
+    this.spinner.show();
+    this.postID = postID;
+    // this.indexID = index;
+    this._communityService.showPostDetails('post/show', this.postID).subscribe(
+      (response) => {
+        this.spinner.hide();
+        console.log(response);
+        this.postContent = response['Data'];
+        console.log(this.postContent);
+        let successMessage = response['Message'];
+        this._flashMessagesService.show(successMessage, {
+          cssClass: 'alert alert-success',
+          timeout: 2000,
+        });
+      },
+      (error) => {
+        let errorMessage = error['error'].Error;
+        this._flashMessagesService.show(errorMessage, {
+          cssClass: 'alert alert-danger',
+          timeout: 2000,
+        });
+      }
+    );
+    this.isEditClicked = true;
   }
   getUser() {
     this.spinner.show();
@@ -260,6 +335,32 @@ export class GetPostComponent implements OnInit {
       console.log(this.isDark);
     } else {
       this.isDark = false;
+    }
+  }
+  isUserLikedPost;
+
+  likeOrUnlikePost(postID, index) {
+    console.log("include?", this.user.likedPosts.includes(postID));
+    if (this.user.likedPosts.includes(postID) == true) {
+      this.isUserLikedPost = false;
+    }
+    else {
+      this.isUserLikedPost = true;
+    }
+    // let like = this.posts[index]['likes'];
+    console.log("like,", this.isUserLikedPost)
+    this.spinner.show()
+    this._communityService.likeOrUnlikePost(`post/like/${postID}`, this.isUserLikedPost).subscribe(response => {
+      this.spinner.hide()
+      console.log(this.postContent['likes']);
+      this.postContent['likes'] = response['Data']['foundPost'].likes;
+      console.log("likedPosts:", response['Data']['user'].likedPosts);
+      this.user.likedPosts = response['Data']['user'].likedPosts;
+      // this.isUserLikedPost = !this.isUserLikedPost;
+      // this.user = response['Data']['user'];
+      console.log(response);
+    }), error => {
+      console.log(error)
     }
   }
 }

@@ -3,27 +3,22 @@
         <div class="row">
             <div class="col-12">
                 <nav class="main-nav">
-                    <!-- ** Logo Start ** -->
+                    <!-- * Logo Start * -->
                     <a routerLink='/' class="logo">Yummly<em> Food</em></a>
-                    <!-- ** Logo End ** -->
-                    <!-- ** Menu Start ** -->
+                    <!-- * Logo End * -->
+                    <!-- * Menu Start * -->
                     <ul class="nav {{ isDark ? 'dark' : '' }}">
-                        <li class="scroll-to-section"><a routerLink="/kitchen" routerLinkActive="active"
-                                [routerLinkActiveOptions]="{exact: true}">Kitchen</a>
+                        <li class="scroll-to-section"><a routerLink="/kitchen" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Kitchen</a>
                         </li>
                         <li class="scroll-to-section"><a routerLink="/community" routerLinkActive="active">Community</a>
                         </li>
-                        <li class="scroll-to-section"><a routerLink="/kitchen/recipes/search" routerLinkActive="active"
-                                [routerLinkActiveOptions]="{exact: true}">Recipes</a></li>
-                        <li class="scroll-to-section"><a routerLink="/kitchen/ingredients/search"
-                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Ingredients</a></li>
-                        <li class="scroll-to-section"><a routerLink="/contact" routerLinkActive="active"
-                                [routerLinkActiveOptions]="{exact: true}">Contact</a></li>
+                        <li class="scroll-to-section"><a routerLink="/kitchen/recipes/search" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Recipes</a></li>
+                        <li class="scroll-to-section"><a routerLink="/kitchen/ingredients/search" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Ingredients</a></li>
+                        <li class="scroll-to-section"><a routerLink="/contact" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Contact</a></li>
                         <li class="scroll-to-section">
                             <div class="switch-wrapper">
                                 <!--checkbox -->
-                                <input class="checkbox-input" type="checkbox" (click)="setTheme(checkboxInput.checked)"
-                                    id="toggleTheme" #checkboxInput>
+                                <input class="checkbox-input" type="checkbox" (click)="setTheme(checkboxInput.checked)" id="toggleTheme" #checkboxInput>
                                 <!--day span -->
                                 <span class="switch-label day">Light</span>
                                 <!--label connected to checkbox -->
@@ -35,12 +30,12 @@
 
                         </li>
                         <li class="main-button" *ngIf="!isLogged;else other_content"><a routerLink="/community">Sign
-                                Up</a>
+                                Up </a>
                         </li>
                         <ng-template #other_content>
                             <div class="dropdown" *ngIf="user">
-                                <i class="fas fa-user-circle profile-dropdown"></i>
-                                <div class="dropdown-content">
+                                <i class="fas fa-user-circle profile-dropdown" (click)="userIconClicked()"></i>
+                                <div class="dropdown-content {{isWidthLessThan1200? 'dropdown-content-1200' : ''}}">
                                     <a routerLink="/community/profile/{{user._id}}">Profile</a>
                                     <a routerLink="/kitchen/recipes/favorite-recipes">Your Recipe Box
                                         <span>{{user.favoriteRecipes.length}}</span></a>
@@ -54,7 +49,7 @@
                     <a class='menu-trigger' (click)="menu()">
                         <span>Menu</span>
                     </a>
-                    <!-- ** Menu End ** -->
+                    <!-- * Menu End * -->
                 </nav>
             </div>
         </div>

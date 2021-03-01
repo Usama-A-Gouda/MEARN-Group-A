@@ -22,12 +22,30 @@
 
                 <h5> {{user.email}}
                 </h5>
-
                 <hr>
-                <h6>Posts : <span>{{user.posts.length}}</span>
+                <div class="user-stats">
+
+                    <h6 data-tooltip="Posts" data-position="top left" data-variation="wide">
+                        <i class="fas fa-newspaper "></i>
+                        <span>{{user.posts.length}}</span>
+                    </h6>
+                    <h6 data-tooltip="Comments" data-position="top left" data-variation="wide"><i class="fas fa-comment"></i> <span>{{user.comments.length}}</span>
+                    </h6>
+                    <h6 data-tooltip="Favorite Posts" data-position="top right" data-variation="wide"><i class="fas fa-star"></i>
+                        <span>{{user.favoritePosts.length}}</span>
+                    </h6>
+                    <h6 data-tooltip="Favorite Recipies" data-position="top left" data-variation="wide">
+                        <i class="fas fa-hamburger"></i>
+                        <span>{{user.favoriteRecipes.length}}</span>
+                    </h6>
+                </div>
 
 
-                </h6>
+
+
+
+
+
                 <hr>
                 <div class="links-container">
                     <a class="ui inverted primary button" routerLink="/community/profile/{{userID}}">View Profile</a>
@@ -73,7 +91,31 @@
                         <div class="post__image" *ngIf="post.imageURL != '' ">
                             <img #image [src]="sanitizeImageUrl(post.imageURL)" alt="">
                         </div>
-                        <hr style="width: 100%;">
+                        <hr style="width: 100%;" class="mt-4">
+                        <div class="reacts mt-3">
+                            <!-- <i class="fas fa-heart"></i> -->
+                            <div class="love">
+                                <h4>
+                                    <i class=" fa-heart
+                                     {{
+                                         user.likedPosts.includes(post._id) ? 'fas' : 'far'
+                                        }}
+
+                                    " (click)="likeOrUnlikePost(post._id,currentIndex)">
+                                    </i>
+                                </h4>
+                                <h4 *ngIf="post.likes.like>0"> {{post.likes.like}}</h4>
+                                <h4 *ngIf="post.likes.like==0"> no reacts yet!</h4>
+
+                            </div>
+                            <div class="comment">
+                                <h4><i class="far fa-comment-alt"></i> </h4>
+                                <h4 *ngIf="post.comments.length>0"> {{post.comments.length}}</h4>
+                                <h4 *ngIf="post.comments.length==0"> no comments yet!</h4>
+
+                            </div>
+                        </div>
+                        <hr style="width: 100%;" class="mt-4">
                         <div class="comments">
                             <div class="comments__show">
 

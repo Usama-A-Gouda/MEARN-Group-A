@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 footer {
   margin-top: 60px;
   background-color: #f2745f;
@@ -10,11 +16,14 @@ footer {
   width: 100%;
 }
 
+.hello {
+  display: flex;
+  align-items: center !important;
+}
+
 footer .left-text-content p {
-  line-height: 6;
   color: #fff;
-  font-size: 14px;
-  text-align: right;
+  font-size: 20px;
 }
 
 footer .right-text-content p {
@@ -26,7 +35,6 @@ footer .right-text-content p {
 
 footer .right-text-content {
   text-align: left;
-  margin-top: 2.5vh;
 }
 
 footer .logo {
@@ -36,9 +44,18 @@ footer .logo {
 footer .right-text-content ul li {
   display: inline-block;
   margin-left: 15px;
+  cursor: pointer;
 }
+
 footer .right-text-content ul li:first-child {
   margin-left: 0px;
+}
+
+.footer__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 2rem 0;
 }
 
 footer .right-text-content ul li a {
@@ -60,3 +77,22 @@ footer .right-text-content ul li a {
 footer .right-text-content ul li a:hover {
   color: #2a2a2a;
 }
+
+.container {
+  width: 100% !important;
+}
+
+@media (max-width: 600px) {
+  .footer__container {
+    flex-direction: column;
+    .right-text-content {
+      margin-bottom: 2rem;
+    }
+  }
+  // .right-text-content,
+  // .right-text-content {
+  //     width: 100%;
+  // }
+}
+
+// }

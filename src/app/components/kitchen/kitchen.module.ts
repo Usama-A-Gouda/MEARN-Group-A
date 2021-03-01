@@ -37,14 +37,13 @@ const routes: Routes = [
   declarations: [HomeComponent],
   imports: [
     CommonModule,
-
     RecipesModule,
     IngredientsModule,
     RouterModule.forChild(routes),
     NgxSpinnerModule,
     ReactiveFormsModule,
     FormsModule,
-    FlashMessagesModule
+    FlashMessagesModule,
   ],
   exports: [],
 })

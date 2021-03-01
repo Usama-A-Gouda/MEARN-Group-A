@@ -49,6 +49,8 @@ export class ProfileComponent implements OnInit {
     this.getUser();
     this.createForm();
   }
+  testUser;
+
   getUser() {
     this.spinner.show();
     this.route.params.subscribe((params: Params) => {
@@ -62,6 +64,8 @@ export class ProfileComponent implements OnInit {
           (response) => {
             this.spinner.hide();
             this.user = response['Data'];
+            this.testUser = response['ModifedData'];
+
             this.posts = response['Data'].posts;
             this.showFooter = true;
             console.log('user:', this.user);
@@ -130,6 +134,10 @@ export class ProfileComponent implements OnInit {
           });
         }
       );
+    }
+    else {
+      this.spinner.hide();
+
     }
   }
   editPost(title, content) {
@@ -203,9 +211,11 @@ export class ProfileComponent implements OnInit {
       .createComment(`post/${postID}/create-comment`, { comment })
       .subscribe(
         (response) => {
+          this.spinner.hide()
           console.log('from 71', response);
-
           this.posts[index]['comments'].push(response['Data']);
+          this.user.comments.push(response['Data']);
+          this.spinner.hide();
           // this.posts[index]["comments"][this.commentIndex].author =  ;
           let successMessage = response['Message'];
           this._flashMessagesService.show(successMessage, {
@@ -224,8 +234,9 @@ export class ProfileComponent implements OnInit {
   }
   commentIndex;
   deleteComment(postID, commentID, currentPosttIndex, currentCommentIndex) {
-    this.spinner.show();
     if (confirm('Are you sure to delete ')) {
+      this.spinner.show();
+
       this.commentIndex = currentCommentIndex;
       this._communityService
         .deleteComment(`post/${postID}/delete-comment/${commentID}`)
@@ -238,6 +249,10 @@ export class ProfileComponent implements OnInit {
               currentCommentIndex,
               1
             );
+            for (let [index, comment] of this.user.comments.entries()) {
+              if (comment['_id'] == commentID)
+                this.user.comments.splice(index, 1);
+            }
 
             let successMessage = response['Message'];
             this._flashMessagesService.show(successMessage, {
@@ -254,6 +269,11 @@ export class ProfileComponent implements OnInit {
           }
         );
     }
+    else {
+      this.spinner.hide();
+
+    }
+
   }
   commentid = '';
   commentValue = '';
@@ -312,6 +332,32 @@ export class ProfileComponent implements OnInit {
       console.log(this.isDark);
     } else {
       this.isDark = false;
+    }
+  }
+  isUserLikedPost;
+
+  likeOrUnlikePost(postID, index) {
+    console.log("include?", this.user.likedPosts.includes(postID));
+    if (this.user.likedPosts.includes(postID) == true) {
+      this.isUserLikedPost = false;
+    }
+    else {
+      this.isUserLikedPost = true;
+    }
+    // let like = this.posts[index]['likes'];
+    console.log("like,", this.isUserLikedPost)
+    this.spinner.show()
+    this._communityService.likeOrUnlikePost(`post/like/${postID}`, this.isUserLikedPost).subscribe(response => {
+      this.spinner.hide()
+      console.log(this.posts[index]['likes']);
+      this.posts[index]['likes'] = response['Data']['foundPost'].likes;
+      console.log("likedPosts:", response['Data']['user'].likedPosts);
+      this.user.likedPosts = response['Data']['user'].likedPosts;
+      // this.isUserLikedPost = !this.isUserLikedPost;
+      // this.user = response['Data']['user'];
+      console.log(response);
+    }), error => {
+      console.log(error)
     }
   }
 }

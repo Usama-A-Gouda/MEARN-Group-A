@@ -135,7 +135,7 @@ export class ShowPostsComponent implements OnInit {
 
   deletePost(postID, index) {
     this.spinner.show();
-    if (confirm('Are you sure to delete ')) {
+    if (confirm('Are you sure to delete ') == true) {
       this._communityService.deletePost('post/delete', postID).subscribe(
         (response) => {
           this.spinner.hide();
@@ -160,6 +160,10 @@ export class ShowPostsComponent implements OnInit {
           });
         }
       );
+    }
+    else {
+      this.spinner.hide();
+
     }
   }
   editPost(title, content) {
@@ -266,10 +270,13 @@ export class ShowPostsComponent implements OnInit {
             this.spinner.hide();
             console.log('This Posts from 86 :', this.posts);
             console.log(response);
+            console.log("user comments,", this.user);
             this.posts[currentPosttIndex]['comments'].splice(
-              currentCommentIndex,
-              1
-            );
+              currentCommentIndex, 1);
+            for (let [index, comment] of this.user.comments.entries()) {
+              if (comment['_id'] == commentID)
+                this.user.comments.splice(index, 1);
+            }
 
             let successMessage = response['Message'];
             this._flashMessagesService.show(successMessage, {
@@ -285,6 +292,10 @@ export class ShowPostsComponent implements OnInit {
             });
           }
         );
+    }
+    else {
+      this.spinner.hide();
+
     }
   }
   commentid = '';

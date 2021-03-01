@@ -1,7 +1,7 @@
 import { Recipe } from './../../../../models/recipe';
 import { RatingService } from './../../../../services/rating.service';
 import { FavoritesService } from './../../../../services/favorites.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -10,6 +10,18 @@ import { UserService } from 'src/app/services/user.service';
 import { CommunityService } from 'src/app/services/community.service';
 import { User } from 'src/app/models/user';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ChartComponent } from 'ng-apexcharts';
+import {
+  ApexNonAxisChartSeries,
+  ApexResponsive,
+  ApexChart,
+} from 'ng-apexcharts';
+export type ChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+};
 
 @Component({
   selector: 'app-recipe-details',
@@ -17,6 +29,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrls: ['./recipe-details.component.scss'],
 })
 export class RecipeDetailsComponent implements OnInit {
+  @ViewChild('chart') chart: ChartComponent;
+  public chartOptions: Partial<ChartOptions>;
   recipeDetails: any;
   recipeDetailsName: string;
   moreRecipes: any;
@@ -27,6 +41,7 @@ export class RecipeDetailsComponent implements OnInit {
   flag3 = false;
   flag4 = false;
   flag6 = false;
+  flag7 = false;
   flag5 = false;
   flagFav = false;
   flagdisable = false;
@@ -44,6 +59,10 @@ export class RecipeDetailsComponent implements OnInit {
   rateButtonFlag = false;
   ratedRecipe = 0;
   shareToCommunityFlag = false;
+  metricorus = 'us';
+  recipeNut;
+  series = [];
+  labels = [];
   constructor(
     private _apiServices: ApiService,
     private route: ActivatedRoute,
@@ -65,13 +84,42 @@ export class RecipeDetailsComponent implements OnInit {
       this.recipeID = params['id'];
       console.log(prodId);
       this._apiServices
-        .get(`recipes/${prodId}/information?amount=1&`)
+        .get(`recipes/${prodId}/information?amount=1&includeNutrition=true&`)
         .subscribe(
           (responseInfo) => {
             this.spinner.hide();
             this.showFooter = true;
             this.recipeDetails = responseInfo;
             console.log(this.recipeDetails);
+            for (const [key, value] of Object.entries(
+              responseInfo['nutrition']['caloricBreakdown']
+            )) {
+              console.log(`${key}: ${value}`);
+              this.labels.push(key);
+              this.series.push(value);
+            }
+            console.log(this.labels, this.series);
+            this.chartOptions = {
+              series: this.series,
+              chart: {
+                width: 380,
+                type: 'pie',
+              },
+              labels: this.labels,
+              responsive: [
+                {
+                  breakpoint: 480,
+                  options: {
+                    chart: {
+                      width: 200,
+                    },
+                    legend: {
+                      position: 'bottom',
+                    },
+                  },
+                },
+              ],
+            };
             if (this.userID != null) {
               this.getUser(this.userID);
               this.isSignIn = true;
@@ -164,6 +212,7 @@ export class RecipeDetailsComponent implements OnInit {
           response['Data'].userID
         );
         this.userID = this._userService.getUserID();
+        this.getUser(this.userID);
       },
       (error) => {
         console.log(error);
@@ -179,27 +228,41 @@ export class RecipeDetailsComponent implements OnInit {
     this.flag3 = false;
     this.flag4 = false;
     this.flag6 = false;
+    this.flag7 = false;
   }
   instActive() {
     this.flag3 = true;
     this.flag2 = false;
     this.flag4 = false;
     this.flag6 = false;
+    this.flag7 = false;
   }
   summActive() {
     this.flag4 = true;
     this.flag2 = false;
     this.flag3 = false;
     this.flag6 = false;
+    this.flag7 = false;
   }
   revActive() {
     this.flag6 = true;
     this.flag4 = false;
     this.flag2 = false;
     this.flag3 = false;
+    this.flag7 = false;
+  }
+  nutActive() {
+    this.flag7 = true;
+    this.flag6 = false;
+    this.flag4 = false;
+    this.flag2 = false;
+    this.flag3 = false;
   }
   back() {
     this._location.back();
+  }
+  toggleMeasure(value) {
+    this.metricorus = value;
   }
   favoriteRecipes;
   addToFavorites() {
@@ -255,7 +318,7 @@ export class RecipeDetailsComponent implements OnInit {
         }
         console.log(this.flagFav);
       },
-      (error) => {}
+      (error) => { }
     );
   }
   createPost(title: string, content: string) {

@@ -1,5 +1,5 @@
 import { CommunityService } from './../../../services/community.service';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 declare const window: any;
 @Component({
@@ -8,17 +8,25 @@ declare const window: any;
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Input() user: Object;
   isScrolled = false;
   isLogged: boolean;
   userID;
-  user;
+
 
   constructor(
     private _userService: UserService,
     private _communityService: CommunityService
-  ) {}
+  ) {
+    let userId = this._userService.getUserID();
+    this.getUser(userId);
+
+  }
 
   ngOnInit(): void {
+
+
+
     // this.isLogged = this._userService.isLogged();
   }
   navScroll(event) {
@@ -47,6 +55,7 @@ export class HeaderComponent implements OnInit {
   menu() {
     const menu = document.querySelector('.menu-trigger') as HTMLInputElement;
     const nav = document.querySelector('.header-area .nav') as HTMLInputElement;
+
     console.log('clicked');
     menu.classList.toggle('active');
     nav.classList.toggle('drop');
@@ -54,9 +63,7 @@ export class HeaderComponent implements OnInit {
   ngAfterContentChecked() {
     if (localStorage.getItem('Token')) {
       this.isLogged = true;
-      if (!this.user) {
-        this.getUser();
-      }
+
     } else {
       this.isLogged = false;
     }
@@ -86,19 +93,31 @@ export class HeaderComponent implements OnInit {
       this.isDark = false;
     }
   }
-  getUser() {
-    console.log(this.userID);
-    let userId = this._userService.getUserID();
-    this._communityService.getUser(`user/get-user/${userId}`).subscribe(
-      (response) => {
-        // console.log('This Posts from 86 :', this.postContent);
-        this.user = response['Data'];
-        console.log('user:', this.user);
-        // console.log('The fav', this.user.favoritePosts.includes(this.posts[0]));
-      },
-      (error) => {
-        let errorMessage = error['error'].Error;
-      }
-    );
+  testUser;
+  getUser(userId) {
+
+
+    if (userId) {
+      this._communityService.getUser(`user/get-user/${userId}`).subscribe(
+        (response) => {
+          // console.log('This Posts from 86 :', this.postContent);
+          this.user = response['Data'];
+          this.testUser = response['Data'];
+
+          console.log('user:', this.user);
+          // console.log('The fav', this.user.favoritePosts.includes(this.posts[0]));
+        },
+        (error) => {
+          let errorMessage = error['error'].Error;
+        }
+      );
+    }
+  }
+  isWidthLessThan1200 = false;
+  userIconClicked() {
+
+    this.isWidthLessThan1200 = !this.isWidthLessThan1200;
+    console.log('1200?', this.isWidthLessThan1200);
+
   }
 }

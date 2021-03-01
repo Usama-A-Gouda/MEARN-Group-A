@@ -331,13 +331,22 @@ header
     color: #f98169 !important;
     opacity: 1;
   }
+  .dropdown-content {
+    display: flex;
+  }
   .header-area {
     background-color: #f7f7f7;
     padding: 0px 15px;
     width: 100vw;
-    height: 80px;
+    height: fit-content;
     box-shadow: none;
     text-align: center;
+  }
+  .dropdown {
+    background-color: #f7f7f7;
+    // i {
+    //     display: none;
+    // }
   }
   .header-area .container {
     padding: 0px;
@@ -354,6 +363,7 @@ header
   .header-area .main-nav .nav {
     float: none;
     width: 100%;
+    height: fit-content;
     display: none;
     -webkit-transition: all 0s ease 0s;
     -moz-transition: all 0s ease 0s;
@@ -558,7 +568,7 @@ input:checked ~ .switch {
   }
 }
 
-/*when the checkbox is checked reduce the opacity of day span and increase of night*/
+//when the checkbox is checked reduce the opacity of day span and increase of night
 
 .switch-wrapper input:checked {
   ~ .switch-label.day {
@@ -615,5 +625,14 @@ input:checked ~ .switch {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
 .dark {
+}
+
+.dropdown-content-1200 {
+  display: flex !important;
+  position: static;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
 }

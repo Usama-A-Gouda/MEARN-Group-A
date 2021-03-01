@@ -10,6 +10,7 @@ import { MealPlanComponent } from './meal-plan/meal-plan.component';
 import { SharedModule } from '../../layout/shared.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FavoriteRecipesComponent } from './favorite-recipes/favorite-recipes.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 const routes: Routes = [
   { path: 'recipes/search', component: SearchComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes),
     NgxSpinnerModule,
+    NgApexchartsModule,
   ],
   exports: [SharedModule],
 })

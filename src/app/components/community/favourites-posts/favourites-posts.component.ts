@@ -108,6 +108,7 @@ export class FavouritesPostsComponent implements OnInit {
               this.user.posts.splice(i, 1);
             }
           });
+
           let successMessage = response['Message'];
 
           this._flashMessagesService.show(successMessage, {
@@ -123,6 +124,10 @@ export class FavouritesPostsComponent implements OnInit {
           });
         }
       );
+    }
+    else {
+      this.spinner.hide();
+
     }
   }
   editPost(title, content) {
@@ -157,8 +162,9 @@ export class FavouritesPostsComponent implements OnInit {
       );
   }
   addComment(comment, postID, index) {
+    this.spinner.show();
+
     if (this.isEditComment == true) {
-      this.spinner.show();
       return this._communityService
         .editComment(`post/${postID}/edit-comment/${this.commentid}`, {
           comment,
@@ -199,6 +205,8 @@ export class FavouritesPostsComponent implements OnInit {
           this.spinner.hide();
           console.log('from 71', response);
           this.posts[index]['comments'].push(response['Data']);
+          this.user.comments.push(response['Data']);
+
           // this.posts[index]["comments"][this.commentIndex].author =  ;
           let successMessage = response['Message'];
           this._flashMessagesService.show(successMessage, {
@@ -231,7 +239,10 @@ export class FavouritesPostsComponent implements OnInit {
               currentCommentIndex,
               1
             );
-
+            for (let [index, comment] of this.user.comments.entries()) {
+              if (comment['_id'] == commentID)
+                this.user.comments.splice(index, 1);
+            }
             let successMessage = response['Message'];
             this._flashMessagesService.show(successMessage, {
               cssClass: 'alert alert-success',
@@ -246,6 +257,11 @@ export class FavouritesPostsComponent implements OnInit {
             });
           }
         );
+    }
+    else {
+      this.spinner.hide();
+
+
     }
   }
   commentid = '';
@@ -348,5 +364,30 @@ export class FavouritesPostsComponent implements OnInit {
           });
         }
       );
+  }
+  isUserLikedPost;
+  likeOrUnlikePost(postID, index) {
+    console.log("include?", this.user.likedPosts.includes(postID));
+    if (this.user.likedPosts.includes(postID) == true) {
+      this.isUserLikedPost = false;
+    }
+    else {
+      this.isUserLikedPost = true;
+    }
+    // let like = this.posts[index]['likes'];
+    console.log("like,", this.isUserLikedPost)
+    this.spinner.show()
+    this._communityService.likeOrUnlikePost(`post/like/${postID}`, this.isUserLikedPost).subscribe(response => {
+      this.spinner.hide()
+      console.log(this.posts[index]['likes']);
+      this.posts[index]['likes'] = response['Data']['foundPost'].likes;
+      console.log("likedPosts:", response['Data']['user'].likedPosts);
+      this.user.likedPosts = response['Data']['user'].likedPosts;
+      // this.isUserLikedPost = !this.isUserLikedPost;
+      // this.user = response['Data']['user'];
+      console.log(response);
+    }), error => {
+      console.log(error)
+    }
   }
 }
