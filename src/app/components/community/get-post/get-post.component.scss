@@ -271,6 +271,14 @@
                     word-break: break-all;
                     width: fit-content;
                 }
+                a {
+                    margin: 1rem;
+                    letter-spacing: 1px;
+                    height: auto;
+                    word-break: break-all;
+                    width: fit-content;
+                    cursor: pointer;
+                }
                 &__image {
                     width: 100%;
                     img {

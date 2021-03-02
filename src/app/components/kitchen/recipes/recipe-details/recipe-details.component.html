@@ -283,6 +283,7 @@
                                         <img src="../../../../../assets/images/summary.png" alt="Picture">
                                     </div>
                                     <div class="cd-timeline-content service-box-content mb-5">
+                                        <h6>Caloric Breakdown</h6>
                                         <div id="chart">
                                             <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels" [responsive]="chartOptions.responsive">
                                             </apx-chart>
@@ -294,13 +295,14 @@
                                         <img src="../../../../../assets/images/summary.png" alt="Picture">
                                     </div>
                                     <div class="cd-timeline-content service-box-content mb-5">
-                                        <h6 *ngFor="let nutrient of recipeDetails.nutrition.nutrients">
+                                        <h6>Recipe's Nutrients</h6>
+                                        <h5 *ngFor="let nutrient of recipeDetails.nutrition.nutrients">
                                             {{nutrient.title}} {{nutrient.amount}}{{nutrient.unit}}
                                             <div class="progress">
                                                 <div class="progress-bar bg-secondary" style="color: white;" [style.width.%]="nutrient.percentOfDailyNeeds">
                                                     {{nutrient.percentOfDailyNeeds}}%</div>
                                             </div>
-                                        </h6>
+                                        </h5>
                                     </div>
                                 </div>
                             </section>

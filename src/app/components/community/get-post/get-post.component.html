@@ -94,10 +94,19 @@
                     <hr>
                     <div class="post" *ngIf="postContent">
                         <h3>{{postContent.title}}</h3>
-                        <p>{{postContent.content}}</p>
-                        <div class="post__image" *ngIf="postContent.imageURL">
-                            <img [src]="sanitizeImageUrl(postContent.imageURL)" alt="">
+                        <div *ngIf="!postContent.content.includes('http');else other_contentt">
+                            <p>{{postContent.content}}</p>
                         </div>
+                        <ng-template #other_contentt>
+                            <a routerLink="{{postContent.content.split('localhost:4200')[1]}}">Click here to show
+                                recipe</a>
+                        </ng-template>
+                        <div class="post__image" *ngIf="postContent.imageURL != ''&&!postContent.imageURL.includes('https');else other_content">
+                            <img #image [src]="sanitizeImageUrl(postContent.imageURL)" alt="">
+                        </div>
+                        <ng-template #other_content>
+                            <img src="{{postContent.imageURL}}" alt="">
+                        </ng-template>
                         <hr style="width: 100%;" class="mt-4">
                         <div class="reacts mt-3">
                             <!-- <i class="fas fa-heart"></i> -->

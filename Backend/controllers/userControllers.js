@@ -10,10 +10,11 @@ const {
   loginValidation,
   contactUsValidation,
 } = require("../validation");
+const { pass } = require("../db/config");
 exports.createUser = async (req, res, next) => {
   // req.body => {username : '' , password : ""}
   try {
-    console.log(req.body);
+    console.log("body from create user", req.body);
     const { username, email, password, confirmedPassword } = req.body;
 
     const errors = registerValidation({
@@ -84,23 +85,26 @@ exports.loginUser = async (req, res, next) => {
     error.statusCode = 422;
     return next(error);
   }
-
-  const foundUser = await User.findOne({ email });
-  if (!foundUser) {
-    const error = new Error();
-    error.statusCode = 401;
-    error.message = "Email OR Passwrod Is Not Correct.";
-    return next(error);
-  }
-
-  // const isEqual = await bcrypt.compare(password, foundUser.password);
-  // if (!isEqual) {
-  //   const error = new Error();
-  //   error.statusCode = 401;
-  //   error.message = "Email OR Passwrod Is Not Correct.";
-  //   return next(error);
-  // }
   try {
+    const foundUser = await User.findOne({ email });
+    if (!foundUser) {
+      const error = new Error();
+      error.statusCode = 401;
+      error.message = "Email OR Passwrod Is Not Correct.";
+      return next(error);
+    }
+    // foundUser.password = await bcrypt.hash(password, 12);
+    // await foundUser.save();
+    console.log(foundUser.password);
+    const isEqual = await bcrypt.compare(req.body.password, foundUser.password);
+    console.log(isEqual);
+    if (!isEqual) {
+      const error = new Error();
+      error.statusCode = 401;
+      error.message = "Email OR Passwrod Is Not Correct.";
+      return next(error);
+    }
+
     if (foundUser.isBlocked == true) {
       const error = new Error();
       error.message = "You have no right to login";
@@ -251,7 +255,9 @@ exports.editUser = async (req, res, next) => {
       error.statusCode = 422;
       throw error;
     }
+    console.log("password", password);
     let hashedPassword = await bcrypt.hash(password, 12);
+    console.log("hashed", hashedPassword);
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,

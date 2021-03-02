@@ -80,14 +80,14 @@ export class SignFormComponent implements OnInit {
         this.buttonClicked();
         let successMessage = response['Message'];
         this._flashMessagesService.show(successMessage, {
-          cssClass: 'alert alert-success',
+          cssClass: 'alert alert-success m-t',
           timeout: 2000,
         });
       },
       (error) => {
         let errorMessage = error['error'].Error;
         this._flashMessagesService.show(errorMessage, {
-          cssClass: 'alert alert-danger',
+          cssClass: 'alert alert-danger m-t',
           timeout: 2000,
         });
       }
@@ -108,7 +108,7 @@ export class SignFormComponent implements OnInit {
         );
         let successMessage = response['Message'];
         this._flashMessagesService.show(successMessage, {
-          cssClass: 'alert alert-success',
+          cssClass: 'alert alert-success m-t',
           timeout: 2000,
         });
         setTimeout(() => {
@@ -118,7 +118,7 @@ export class SignFormComponent implements OnInit {
       (error) => {
         let errorMessage = error['error'].Error;
         this._flashMessagesService.show(errorMessage, {
-          cssClass: 'alert alert-danger',
+          cssClass: 'alert alert-danger m-t',
           timeout: 2000,
         });
       }

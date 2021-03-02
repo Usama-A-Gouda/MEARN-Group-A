@@ -216,7 +216,7 @@ export class GetPostComponent implements OnInit {
           this.spinner.hide()
           console.log('from 71', response);
 
-          this.postContent['comments'].push(response['Data']);
+          this.postContent['comments'].unshift(response['Data']);
           this.user.comments.push(response['Data']);
           this.spinner.hide();
           // this.posts[index]["comments"][this.commentIndex].author =  ;

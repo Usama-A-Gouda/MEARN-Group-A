@@ -2,6 +2,7 @@ import { ApiService } from './../../../services/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import AOS from 'aos';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +14,11 @@ export class HomeComponent implements OnInit {
   checked: boolean;
   isDark = false;
 
-  constructor(private _apiService: ApiService, public router: Router) {}
+  constructor(private _apiService: ApiService, public router: Router) { }
 
   ngOnInit(): void {
+    AOS.init();
+
     this._apiService.get('recipes/random?number=4').subscribe(
       (response) => {
         let random = Object.values(response);

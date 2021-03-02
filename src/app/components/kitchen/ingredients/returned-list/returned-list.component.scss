@@ -167,7 +167,7 @@
         background-color: rgba(0, 0, 0, 0.4);
         border-radius: 10px;
         em {
-            color: #ed2460;
+            color: #000000;
             text-transform: uppercase;
         }
     }
@@ -255,7 +255,7 @@
 :root {
     --headlinesFont: 'Jost', sans-serif;
     --bodyFont: 'Work Sans', sans-serif;
-    --wildWatermelon: #ff4f87;
+    --wildWatermelon: #f98169;
     --fuelYellow: #f0a035;
     --textColor: #323232;
     --bodyBg: #d6d6d6;
@@ -347,7 +347,7 @@ a {
             a {
                 font-family: var(--headlinesFont);
                 display: inline-block;
-                background-color: #ff4f87;
+                background-color: #f98169;
                 padding: .45em 1em;
                 width: 50%;
                 text-align: center;
@@ -392,10 +392,10 @@ a {
             margin-right: 7px;
             line-height: 2;
             font-size: 17px;
-            color: #ff4f87;
+            color: #f98169;
         }
         .value {
-            color: #ff4f87;
+            color: #f98169;
             // margin-left: .35em;
             vertical-align: bottom;
             font: {

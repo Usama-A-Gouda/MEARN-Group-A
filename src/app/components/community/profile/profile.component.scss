@@ -374,6 +374,14 @@
                     word-break: break-all;
                     width: fit-content;
                 }
+                a {
+                    margin: 1rem;
+                    letter-spacing: 1px;
+                    height: auto;
+                    word-break: break-all;
+                    width: fit-content;
+                    cursor: pointer;
+                }
                 &__image {
                     width: 100%;
                     img {
@@ -649,7 +657,7 @@ body {
 .target {
     visibility: visible;
     opacity: 1;
-    z-index: 50;
+    z-index: 101;
     .popup-inner {
         bottom: 0;
         right: 0;

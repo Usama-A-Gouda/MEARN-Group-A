@@ -48,8 +48,7 @@
                     </div>
                     <form onSubmit="return false; ">
                         <div class="input-icons">
-                            <input #searchname class="input-field" type="text"
-                                placeholder="{{checked ? 'Search for ingredients' : 'Search for recipe' }}">
+                            <input #searchname class="input-field" type="text" placeholder="{{checked ? 'Search for ingredients' : 'Search for recipe' }}">
                         </div>
                         <div>
                             <a class="btn btn-1" (click)="onSubmit(searchname.value) ">
@@ -66,7 +65,7 @@
     <!-- Plan -->
     <div class="grid-container">
         <section id="about">
-            <div class="section__container  section__container--planing">
+            <div class="section__container  section__container--planing" data-aos="fade-up" data-aos-duration="5000">
                 <div class="section__details">
 
 
@@ -100,7 +99,7 @@
         <!-- Community -->
         <section id="about">
 
-            <div class="section__container  section__container--community">
+            <div class="section__container  section__container--community" data-aos="fade-up" data-aos-duration="5000">
                 <div class="section__details">
 
                     <div class="section__details--title">
@@ -179,8 +178,7 @@
                     <div class="middle">
 
                         <p class="text">{{recipe.title}}</p>
-                        <button (click)="test(recipe.id)"
-                            routerLink="/kitchen/recipes/recipe-details/{{recipe.id}}/information">
+                        <button (click)="test(recipe.id)" routerLink="/kitchen/recipes/recipe-details/{{recipe.id}}/information">
 
                             <i class="fa fa-arrow-right"></i>
                         </button>
@@ -188,8 +186,7 @@
                 </div>
             </div>
 
-            <button routerLink="/kitchen/explore-all-random-recipes" class="learn-more explore-all-food"
-                routerLink="/kitchen/recipes/explore-all-random-recipes">
+            <button routerLink="/kitchen/explore-all-random-recipes" class="learn-more explore-all-food" routerLink="/kitchen/recipes/explore-all-random-recipes">
                 <span class="circle" aria-hidden="true">
                     <span class="icon arrow"></span>
                 </span>

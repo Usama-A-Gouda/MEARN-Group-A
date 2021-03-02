@@ -150,19 +150,26 @@
                             <div class="comments">
                                 <div class="comments__show">
 
-                                    <div class="comment__author" *ngFor="let comment of post.comments.slice(0, 3);;let currentCommentIndex=index">
+                                    <div class="comment__author" *ngFor="let comment of post.comments.slice(0, 3);let currentCommentIndex=index">
                                         <img [src]="sanitizeImageUrl(comment.author.imageURL)" alt="">
 
                                         <div class="comment__author--info">
                                             <h3>{{comment.author.username}}</h3>
                                             <p>{{comment.comment}} </p>
 
+
                                         </div>
+
                                         <div class="comment__action" *ngIf="userID == comment.author._id">
 
                                             <i (click)="getCommentValue(comment)" class="fas fa-edit"></i>
                                             <i (click)="deleteComment(post._id,comment._id,currentIndex,currentCommentIndex)" class="fas fa-trash"></i>
                                         </div>
+
+                                        <!-- <div class="comment__time">
+                                            <p>{{ stringAsDate(comment.createdAt) | date:'dd/MM/yy' }}</p>
+                                            <p>{{ stringAsDate(comment.createdAt) | date:'HH:mm' }}</p>
+                                        </div> -->
                                     </div>
 
                                 </div>

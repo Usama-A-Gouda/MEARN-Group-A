@@ -213,7 +213,7 @@ export class ProfileComponent implements OnInit {
         (response) => {
           this.spinner.hide()
           console.log('from 71', response);
-          this.posts[index]['comments'].push(response['Data']);
+          this.posts[index]['comments'].unshift(response['Data']);
           this.user.comments.push(response['Data']);
           this.spinner.hide();
           // this.posts[index]["comments"][this.commentIndex].author =  ;

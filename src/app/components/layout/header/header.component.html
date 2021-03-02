@@ -33,15 +33,15 @@
                                 Up </a>
                         </li>
                         <ng-template #other_content>
-                            <div class="dropdown" *ngIf="user">
+                            <div class="dropdown" >
                                 <i class="fas fa-user-circle profile-dropdown" (click)="userIconClicked()"></i>
                                 <div class="dropdown-content {{isWidthLessThan1200? 'dropdown-content-1200' : ''}}">
-                                    <a routerLink="/community/profile/{{user._id}}">Profile</a>
-                                    <a routerLink="/kitchen/recipes/favorite-recipes">Your Recipe Box
+                                    <a *ngIf="user" routerLink="/community/profile/{{user._id}}">Profile</a>
+                                    <a *ngIf="user" routerLink="/kitchen/recipes/favorite-recipes">Your Recipe Box
                                         <span>{{user.favoriteRecipes.length}}</span></a>
-                                    <a routerLink="/community/favourites-posts">Favorite Posts
+                                    <a *ngIf="user" routerLink="/community/favourites-posts">Favorite Posts
                                         <span>{{user.favoritePosts.length}}</span></a>
-                                    <a routerLink="/community" (click)="logout()">Logout</a>
+                                    <a *ngIf="user" routerLink="/community" (click)="logout()">Logout</a>
                                 </div>
                             </div>
                         </ng-template>

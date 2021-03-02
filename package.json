@@ -31,6 +31,7 @@
     "angular-material": "^1.2.2",
     "angular2-flash-messages": "^3.0.1",
     "angularx-social-login": "^3.5.4",
+    "aos": "^2.3.4",
     "apexcharts": "^3.25.0",
     "bootstrap": "^4.5.3",
     "emailjs": "^3.4.0",
