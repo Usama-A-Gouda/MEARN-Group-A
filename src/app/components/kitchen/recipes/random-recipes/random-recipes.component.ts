@@ -14,11 +14,13 @@ export class RandomRecipesComponent implements OnInit {
     private _apiService: ApiService,
     private spinner: NgxSpinnerService,
     private _location: Location
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    let apiKey = "&apiKey=86975541261a434b8841262737615310"
+
     this.spinner.show();
-    this._apiService.get('recipes/random?number=3').subscribe(
+    this._apiService.get('recipes/random?number=3', apiKey).subscribe(
       (response) => {
         this.spinner.hide();
         let random = Object.values(response);

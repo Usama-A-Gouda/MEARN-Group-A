@@ -33,8 +33,9 @@ export class ChatbotComponent implements OnInit {
 
     this.questionAfterReplace = question.replace(/\s/g, '+');
     console.log(this.questionAfterReplace);
+    let apiKey = "&apiKey=41cd200dd2e442978c0cb5d02e6e8fc1"
     this._apiServices
-      .get(`food/converse?text=${this.questionAfterReplace}&`)
+      .get(`food/converse?text=${this.questionAfterReplace}`, apiKey)
       .subscribe(
         (responseInfo) => {
           console.log(responseInfo);

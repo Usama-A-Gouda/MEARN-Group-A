@@ -83,8 +83,10 @@ export class RecipeDetailsComponent implements OnInit {
       const prodId = params['id'];
       this.recipeID = params['id'];
       console.log(prodId);
+      let apiKey = "&apiKey=17fe369a2f744693830980ad3df01b3a"
+
       this._apiServices
-        .get(`recipes/${prodId}/information?amount=1&includeNutrition=true&`)
+        .get(`recipes/${prodId}/information?amount=1&includeNutrition=true&`, apiKey)
         .subscribe(
           (responseInfo) => {
             this.spinner.hide();

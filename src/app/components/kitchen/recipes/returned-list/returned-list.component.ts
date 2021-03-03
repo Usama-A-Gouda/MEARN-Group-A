@@ -164,7 +164,7 @@ export class ReturnedListComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -252,9 +252,11 @@ export class ReturnedListComponent implements OnInit {
     this.search = '';
     this.search = 'The recipe name is ' + searchName;
     this.filterQuery;
+    let apiKey = "&apiKey=ae9c1fc1e9bd48d896316a0627a03777"
+
     this._apiServices
       .get(
-        `recipes/complexSearch?query=${searchName}&addRecipeInformation=true&number=${this.number}`
+        `recipes/complexSearch?query=${searchName}&addRecipeInformation=true&number=${this.number}`, apiKey
       )
       .subscribe(
         (responseId) => {
@@ -271,9 +273,11 @@ export class ReturnedListComponent implements OnInit {
     this.spinner.show();
     this.search = '';
     this.search = 'Ingredients for the recipes is ' + searchName;
+    let apiKey = "&apiKey=ae9c1fc1e9bd48d896316a0627a03777"
+
     this._apiServices
       .get(
-        `recipes/findByIngredients?ingredients=${searchName}&number=${this.numberIng}`
+        `recipes/findByIngredients?ingredients=${searchName}&number=${this.numberIng}`, apiKey
       )
       .subscribe(
         (responseId) => {
@@ -292,9 +296,11 @@ export class ReturnedListComponent implements OnInit {
     this.search = '';
     this.search = searchName;
     console.log('Entered here', searchName);
+    let apiKey = "&apiKey=66aef3f26f9b46d8be0fcc6d999fcb59"
+
     this._apiServices
       .get(
-        `recipes/complexSearch?${searchName}&addRecipeInformation=true&number=${this.numberType}`
+        `recipes/complexSearch?${searchName}&addRecipeInformation=true&number=${this.numberType}`, apiKey
       )
       .subscribe(
         (responseId) => {
@@ -310,9 +316,11 @@ export class ReturnedListComponent implements OnInit {
   getMoreInfo(list: any[]) {
     this.spinner.show();
     this.recipesList = [];
+    let apiKey = "&apiKey=265515485e5342db8f3ef41441dcc023"
+
     list.forEach((element) => {
       this._apiServices
-        .get(`recipes/${element.id}/information?includeNutrition=false`)
+        .get(`recipes/${element.id}/information?includeNutrition=false`, apiKey)
         .subscribe(
           (responseId) => {
             this.spinner.hide();
@@ -388,8 +396,10 @@ export class ReturnedListComponent implements OnInit {
     });
     this.search = searchQuery;
     console.log(query);
+    let apiKey = "&apiKey=58d2987051ff49ef9836801fa276cec8"
+
     this._apiServices
-      .get(`recipes/complexSearch?addRecipeInformation=true&number=12&${query}`)
+      .get(`recipes/complexSearch?addRecipeInformation=true&number=12&${query}`, apiKey)
       .subscribe(
         (responseId) => {
           this.spinner.hide();

@@ -29,8 +29,10 @@ export class DetailComponent implements OnInit {
   }
   getResults = () => {
     // this.spinner.show();
+    let apiKey = '&apiKey=c973a070e9e0471fa25a63ee8f79c975';
+
     this._apiServices
-      .get(`food/ingredients/${this.searchParams}/information?amount=1&`)
+      .get(`food/ingredients/${this.searchParams}/information?amount=1&`, apiKey)
       .subscribe(
         (responseInfo) => {
           // this.spinner.hide();

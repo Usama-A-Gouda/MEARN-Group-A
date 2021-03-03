@@ -17,9 +17,9 @@ export class HomeComponent implements OnInit {
   constructor(private _apiService: ApiService, public router: Router) { }
 
   ngOnInit(): void {
-    AOS.init();
-
-    this._apiService.get('recipes/random?number=4').subscribe(
+    // AOS.init();
+    let apiKey = '&apiKey=9108c6ae9e864c39af9e61ee07d9827f';
+    this._apiService.get('recipes/random?number=4', apiKey).subscribe(
       (response) => {
         let random = Object.values(response);
         this.randomRecipes = random[0];

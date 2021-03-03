@@ -9,9 +9,9 @@ import { environment } from '../../environments/environment';
 export class ApiService {
 
   constructor(private _httpClient: HttpClient) { }
-  get(url: string) {
+  get(url: string, apiKey) {
     //return this._httpClient.get(`${environment.apiURL}/${url}`,{headers:{'token':this._userService.getToken()}});
-    return this._httpClient.get(`${environment.apiURL}/${url}${environment.apiKey}`, { headers: { 'Content-Type': 'application/json' } });
+    return this._httpClient.get(`${environment.apiURL}/${url}${apiKey}`, { headers: { 'Content-Type': 'application/json' } });
   }
 
   // post(url: string, body: any) {

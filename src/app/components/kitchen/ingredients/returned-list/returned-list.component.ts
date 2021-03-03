@@ -53,8 +53,10 @@ export class ReturnedListComponent implements OnInit {
     this.location.replaceState(
       `/kitchen/ingredients/returned-list/${this.ingredientName}`
     );
+    let apiKey1 = '&apiKey=1535a0d0d6de4cdab95490ad4891a2b5';
+
     this._apiServices
-      .get(`food/ingredients/search?query=${this.ingredientName}&`)
+      .get(`food/ingredients/search?query=${this.ingredientName}`, apiKey1)
       .subscribe(
         (responseId) => {
           this.ingredients = responseId;
@@ -67,9 +69,11 @@ export class ReturnedListComponent implements OnInit {
       );
   }
   getResults = () => {
+    let apiKey2 = '&apiKey=551e91b6bbc247fc94deae528ab14117';
+
     for (let res of this.ingredients.results) {
       this._apiServices
-        .get(`food/ingredients/${res.id}/information?amount=1&`)
+        .get(`food/ingredients/${res.id}/information?amount=1&`, apiKey2)
         .subscribe(
           (responseInfo) => {
             this.spinner.hide();

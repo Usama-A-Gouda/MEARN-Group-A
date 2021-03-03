@@ -20,7 +20,7 @@ export class FavoriteRecipesComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _userService: UserService,
     private _communityService: CommunityService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -34,9 +34,11 @@ export class FavoriteRecipesComponent implements OnInit {
         this.spinner.hide();
         this.user = response['Data'];
         console.log('user:', this.user);
+        let apiKey = "&apiKey=8f9a788890054729a7d1374129136dcc"
         for (let recipe of this.user.favoriteRecipes) {
+
           this._apiServices
-            .get(`recipes/${recipe}/information?amount=1&`)
+            .get(`recipes/${recipe}/information?amount=1&`, apiKey)
             .subscribe(
               (responseInfo) => {
                 this.spinner.hide();

@@ -5,7 +5,7 @@
 export const environment = {
   // 17fe369a2f744693830980ad3df01b3a
   production: false,
-  apiKey: '&apiKey=c973a070e9e0471fa25a63ee8f79c975',
+  apiKey: '&apiKey=2fd01d9acd0d4589abceb2a949ca78e7',
   // 1ea7ccdb2a4445abb3c6e090c8c3bef3
   // b1de746b758344fc86efa73981c14867
   apiURL: 'https://api.spoonacular.com',

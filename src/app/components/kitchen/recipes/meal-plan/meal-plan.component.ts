@@ -13,13 +13,15 @@ export class MealPlanComponent implements OnInit {
     private _apiService: ApiService,
     private spinner: NgxSpinnerService,
     private _location: Location
-  ) {}
+  ) { }
   planRecipes;
   planRecipesDetails = [];
   ngOnInit(): void {
     this.spinner.show();
+    let apiKey = "&apiKey=62482d53c54e4f75b718a096750b53af"
+
     this._apiService
-      .get('/mealplanner/generate?timeFrame=day&addRecipeInformation=true&')
+      .get('/mealplanner/generate?timeFrame=day&addRecipeInformation=true', apiKey)
       .subscribe(
         (response) => {
           let random = Object.values(response);
@@ -35,8 +37,10 @@ export class MealPlanComponent implements OnInit {
       );
   }
   getResults = () => {
+    let apiKey = "&apiKey=62482d53c54e4f75b718a096750b53af";
+
     for (let res of this.planRecipes.meals) {
-      this._apiService.get(`recipes/${res.id}/information?amount=1&`).subscribe(
+      this._apiService.get(`recipes/${res.id}/information?amount=1`, apiKey).subscribe(
         (responseInfo) => {
           console.log(responseInfo);
           this.planRecipesDetails.push(responseInfo);
